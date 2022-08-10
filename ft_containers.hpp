@@ -19,8 +19,9 @@ namespace ft
         typedef typename allocator_type::pointer         pointer;
         typedef typename allocator_type::const_pointer   const_pointer;
         typedef typename random_access_iterator<pointer>          iterator;
+        typedef std::size_t size_type;
         //typedef ft::reverse_iterator<iterator>          reverse_iterator;
-        //typedef ft::reverse_iterator<const_iterator>    const_reverse_iterator;
+        //typedef ft::reverse_iterator<const_iterator>    const_reverse_iterator; 
 
 
 
@@ -29,14 +30,54 @@ namespace ft
        // typedef Alloc       allocat_type;
 
         //allocat_type        my_alloc;
+        private:
+            size_type _capacite;
+            size_type _size;
+            size_type _max_size;
+            pointer vector;
+            allocator_type all;
+
         public:
-            pointer arr;
-            allocator all;
-        vector(T a)
+            size_type capacity() const
+            {
+                return _capacite;
+            }
+            size_type size() const
+            {
+                return (_size);
+            }
+            size_type size() const;
+            {
+                return _max_size;
+            }
+            void resize (size_type n, value_type val = value_type())
+            {
+                if (n < _size)
+                    _size = n;
+                else if (n > _size && n < _capacite)
+                {
+                    for(int i = _size, i < n, i++)
+                        all.construct(vector + i , val);
+
+                    _size = n;
+                }
+                else if (n > _size && n > _capacite)
+                {
+                    _capacite *= 2;
+                    if (_capcite < n)
+                        _capacite = n;
+                    pointer v;
+                    v = all.allocate(_capacite);
+                    
+
+                    
+                }
+            }
+        /*vector(T a)
         {
             arr = all.allocate(10);
             all.constuct(arr+0, a);
-        }
+        }*/
     };
 };
 
