@@ -46,7 +46,7 @@ namespace ft
             {
                 return (_size);
             }
-            size_type size() const;
+            size_type max_size() const;
             {
                 return _max_size;
             }
@@ -68,11 +68,20 @@ namespace ft
                         _capacite = n;
                     pointer v;
                     v = all.allocate(_capacite);
-                    
-
-                    
+                    for (size_t i = 0; i < _size; i++)
+                        all.construct(v + i, vector[i]);
+                    for(size_t i = _size; i < n; i++)
+                      all.construct(v + i, val);
                 }
             }
+            bool empty() const;
+            {
+                if (_size == 0)
+                    return true;
+                else
+                    false;
+            }
+            
         /*vector(T a)
         {
             arr = all.allocate(10);
