@@ -47,7 +47,10 @@ namespace ft
                 for(int i = 0; i < n; i++)
                     all.construct(_vector+i, val);
             }
-            
+            ~vector()
+            {
+
+            }
             vector (const vector& x)
             {
                 this->all = x.all;
@@ -61,21 +64,38 @@ namespace ft
 
             vector& operator= (const vector& x)
             {
-                if (this->_capacite > 0)
-                    this->all.deallocate(this->_vector, this->_capacite);
+                //std::cout << "====>" << std::endl;
+                /*if (this->_capacite > 0)*/
+                this->all.deallocate(this->_vector, this->_capacite);
                 this->all = x.all;
+
                 this->_vector = all.allocate(x._capacite);
                 this->_capacite = x._capacite;
                 this->_size = x._size;
                 this->_max_size = x._max_size;
-                for(int i = 0; i < x->_size; i++)
-                    this->all.construct(this->_vector+i, x._vector+i);
+                for(int i = 0; i < x._size; i++)
+                    this->all.construct(this->_vector+i, x._vector[i]);
                 return (*this);
             }
 
-            reference operator[] (size_type n)
+            reference operator[] (size_type n) const
             {
                return *(this->_vector+n);
+            }
+
+            reference at (size_type n) const
+            {
+               return *(this->_vector+n);
+            }
+
+            reference front()
+            {
+                return*(this->_vector+0);
+            }
+
+            reference back()
+            {
+                return*(this->_vector+(_size - 1));
             }
 
             size_type capacity() const
@@ -140,6 +160,7 @@ namespace ft
                 if (this->_size < this->_capacite)
                 {
                     this->all.construct(this->_vector+_size, val);
+                    this->_size += 1;
                 }
                 else
                 {
@@ -157,6 +178,7 @@ namespace ft
                     all.construct(v+i, val);
                     // old_vector
                     this->_vector = v;
+                    this->_size += 1;
                     // new memory _vector
                 }
             }
@@ -168,6 +190,43 @@ namespace ft
                     _size -= 1;
 
                 }
+            }
+
+            void swap (vector& x)
+            {
+                // vector *v;
+                // v = this;
+                // this = x;
+                // x = v;
+
+
+                size_type _size_tmp;
+                size_type _capacity_tmp;
+                pointer   _vector_tmp;
+
+                _vector_tmp = x._vector;
+                _size_tmp = x._size;
+                _capacity_tmp = x._capacite;
+
+                x._vector = this->_vector;
+                x._size = this->_size;
+                x._capacite = this->_capacite;
+
+                this->_size = _size_tmp;
+                this->_capacite = _capacity_tmp;
+                this->_vector = _vector_tmp;
+
+                // vector tmp;
+                // tmp = *this;
+                // *this = x;
+                // x = tmp;
+                //tmp->all.deallocate(tmp->_vector, tmp->_capacite);
+            }
+            void clear()
+            {
+                for(int i = 0; i < this->_size; i++)
+                    all.destroy(this->_vector+i);
+                this->_size = 0;
             }
         /*vector(T a)
         {

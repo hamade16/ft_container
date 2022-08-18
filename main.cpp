@@ -6,28 +6,98 @@
 using namespace std;
 int main()
 {
-    //allocator<int> myAllocator;
-    //ft::vector<int> ar(10); 
-    ft::vector<int> ar(5, 2);
-    ft::vector<int> x(ar);
-    ar.pop_back();
-    //ar.push_back(5);
-    for(int i = 0; i < ar.size(); i++)
-        std::cout << ar[i] << std::endl;
-   // system("leaks a.out");
+//     std::vector<int> myvector;
+
+//     std::vector<int>::iterator it = myvector.begin();
 
 
-    //ar.push_back(1);
-    //ar.push_back(-6);
-    //ar.push_back(8);
-    //ar.push_back(9);
-    //ar.push_back(4);
+//     myvector.push_back(78);
+//     myvector.push_back(16);
+    
+//     // now front equals 78, and back 16
+    
+//     myvector.front() -= myvector.back();
+    
+//     std::cout << "myvector.front() is now " << myvector.front() << '\n';
+//     return 0;
+//     //allocator<int> myAllocator;
+//     //ft::vector<int> ar(10); 
+//     /*ft::vector<int> ar(5, 2);
+//     ft::vector<int> av(3, 3);
+//     ar.pop_back();
+//     ar.push_back(5);
+//     ar.clear();
+//     ar.push_back(200);
+//     ar.push_back(100);
+//     ar.swap(av);
+//     for(int i = 0; i < ar.size(); i++)
+//         std::cout << ar.at(i) << std::endl;
+    
+    
+//     std::cout << "======" << std::endl;*/
 
-    //std::vector <int>::iterator it = ar.begin();
-    //std::vector<int>::reverse_iterator rit = ar.rbegin();
-    //while (rit != ar.rend())
-    //{
-    //    std::cout << *rit << std::endl;
-    //    rit++;
-    //}
+//      /*for(int i = 0; i < av.size(); i++)
+//         std::cout << av[i] << std::endl;*/
+//    // system("leaks a.out");
+
+
+//     //ar.push_back(1);
+//     //ar.push_back(-6);
+//     //ar.push_back(8);
+//     //ar.push_back(9);
+//     //ar.push_back(4);
+
+//     //std::vector <int>::iterator it = ar.begin();
+//     //std::vector<int>::reverse_iterator rit = ar.rbegin();
+//     //while (rit != ar.rend())
+//     //{
+//     //    std::cout << *rit << std::endl;
+//     //    rit++;
+//     //}
+
+    // class iter 
+    // {
+    //     public:
+    //         int *p;
+
+    //         iter(int *adress)
+    //         {
+    //             p = adress;
+    //         }
+    // };
+
+    int *arr = new int(10);
+    for (int i = 0; i < 10; i++)
+        arr[i] = i * 20;
+
+    int *it1(arr + 3);
+    
+    int *it = arr + 0;
+    int *it_end = arr + 10;
+    
+    for (; it != it_end; it++)
+    {
+        std::cout << *it << std::endl;
+    }
+
+
+
+
+        
+    // std::vector<int> v(10, 13);
+    // std::vector<int>::iterator it = v.begin(); 
+    // std::vector<int>::iterator ii_end = v.end(); 
+    
+    // for (int i = 0; i < 10; i++)
+    // {
+    //     std::cout << v[i] << std::endl;
+    // }
+    
+    
+    // for (; it != ii_end; it++)
+    // {
+    //     std::cout << *it << std::endl;
+    // }
+
+    
 }
