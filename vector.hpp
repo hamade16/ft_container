@@ -5,20 +5,26 @@
 # include <memory>
 # include <vector>
 
+#include "random_access_iterator.hpp"
+#include "reverse_iterator.hpp"
+
 namespace ft
 {
     template<class T, class Alloc = std::allocator<T>() >
     class vector {
-        typedef T                                        value_type;
-        typedef std::allocator<value_type>               allocator_type;
-        typedef typename allocator_type::reference       reference;
-        typedef typename allocator_type::const_reference const_reference;
-        typedef typename allocator_type::pointer         pointer;
-        typedef typename allocator_type::const_pointer   const_pointer;
-       // typedef typename random_access_iterator<pointer>          iterator;
-        typedef std::size_t size_type;
-        //typedef ft::reverse_iterator<iterator>          reverse_iterator;
-        //typedef ft::reverse_iterator<const_iterator>    const_reverse_iterator; 
+
+        public:
+            typedef T                                        value_type;
+            typedef std::allocator<value_type>               allocator_type;
+            typedef typename allocator_type::reference       reference;
+            typedef typename allocator_type::const_reference const_reference;
+            typedef typename allocator_type::pointer         pointer;
+            typedef typename allocator_type::const_pointer   const_pointer;
+            typedef ft::random_access_iterator<pointer>          iterator;
+            typedef ft::random_access_iterator<const pointer>    const_iterator;
+            typedef std::size_t                              size_type;
+            typedef ft::reverse_iterator<iterator>          reverse_iterator;
+        typedef ft::reverse_iterator<const_iterator>    const_reverse_iterator; 
 
         private:
             size_type _capacite;
@@ -165,7 +171,14 @@ namespace ft
                 else
                 {
                     old_capacity = _capacite;
-                    _capacite *= 2;
+
+                    if ( _capacite == _size)
+                    {
+                        if (_capacite == 0)
+                            _capacite = 1;
+                        else
+                            _capacite *= 2;
+                    }
                     pointer v;
                     v = all.allocate(this->_capacite);
                     int i;
@@ -228,6 +241,30 @@ namespace ft
                     all.destroy(this->_vector+i);
                 this->_size = 0;
             }
+
+              iterator begin()
+              {
+                iterator it;
+                it = this->_vector;
+                return it;
+              }
+
+              iterator end()
+              {
+                iterator it;
+                it = this->_vector+(_size);
+                return it;
+              }
+              reverse_iterator rbegin()
+              {
+                reverse_iterator rev_it(end());
+                return (rev_it);
+              }
+              reverse_iterator  rend()
+              {
+                reverse_iterator rev_it(begin());
+                return (rev_it);
+              }
         /*vector(T a)
         {
             arr = all.allocate(10);

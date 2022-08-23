@@ -1,11 +1,41 @@
 #include <iostream>
-#include "ft_containers.hpp"
+#include "vector.hpp"
+#include "random_access_iterator.hpp"
+#include "reverse_iterator.hpp"
 #include <memory>
 #include <vector>
 
 using namespace std;
 int main()
 {
+
+    ft::vector<int> myvector;
+  for (int i=0; i<10; i++) myvector.push_back(i);
+
+  ft::reverse_iterator<ft::vector<int>::iterator> from,until;
+
+  from = myvector.rbegin();
+  until = myvector.rend();
+  std::cout << "myvector has " << (until-from) << " elements.\n";
+
+  return 0;
+    //std::vector<int>::iterator iii;
+    //ft::vector<int> vect(1, 11);
+    //vect.push_back(44);
+    //vect.push_back(55);
+    //vect.push_back(66);
+    //ft::vector<int>::iterator it = 1 + vect.begin();
+    //ft::vector<int>::iterator it_end = vect.end();
+
+   // it = 1 + it;
+    //it += 1;
+    //it_end -= 1;
+   // std::cout << it_end - it << std::endl;
+    //for (; it != it_end; it_end--)
+    //{
+    //    std::cout << *it_end << std::endl;
+    //}
+    //vect.push_back(70);
 //     std::vector<int> myvector;
 
 //     std::vector<int>::iterator it = myvector.begin();
@@ -66,7 +96,7 @@ int main()
     //         }
     // };
 
-    int *arr = new int(10);
+    /*int *arr = new int(10);
     for (int i = 0; i < 10; i++)
         arr[i] = i * 20;
 
@@ -78,7 +108,7 @@ int main()
     for (; it != it_end; it++)
     {
         std::cout << *it << std::endl;
-    }
+    }*/
 
 
 
