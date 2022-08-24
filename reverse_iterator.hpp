@@ -56,7 +56,7 @@ namespace ft{
              reference    operator*()
              {
                 iterator_type it1 = it;
-                return ((--it1));
+                return (--it1);
              }
              
              pointer operator->() const
