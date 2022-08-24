@@ -16,7 +16,7 @@ int main()
 
   from = myvector.rbegin();
   until = myvector.rend();
-  std::cout << "myvector has " << (until-from) << " elements.\n";
+//   std::cout << "myvector has " << (until-from) << " elements.\n";
 
   return 0;
     //std::vector<int>::iterator iii;

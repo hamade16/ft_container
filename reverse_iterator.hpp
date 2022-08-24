@@ -7,15 +7,15 @@ namespace ft{
     template <class Iter>
     class reverse_iterator{
         public:
-            typedef Iter                                                            iterator_type;
-            typedef typename std::iterator_traits<iterator_type>::iterator_category iterator_category;
-            typedef typename std::iterator_traits<iterator_type>::value_type        value_type;
-            typedef typename std::iterator_traits<iterator_type>::difference_type   difference_type;
-            typedef typename std::iterator_traits<iterator_type>::pointer           pointer;
-            typedef typename std::iterator_traits<iterator_type>::reference         reference;
+            typedef Iter                iterator_type;
+            typedef Iter                value_type;
+            typedef Iter*                pointer;
+            typedef Iter&                reference;
+            typedef std::ptrdiff_t       difference_type;
+            //typedef typename std::iterator_traits<iterator_type>::reference         reference;
         private:
+            iterator_type  it;
         public:
-            iterator_type it;
             reverse_iterator(): it()
             {
             }
@@ -27,7 +27,7 @@ namespace ft{
 
             reverse_iterator(reverse_iterator const & src)
             {
-                this->it = src.it;
+                this->it = src.base();
             }
 
             template <class Iterator>
@@ -43,9 +43,9 @@ namespace ft{
 
              reverse_iterator    &operator=(iterator_type  const & src)
              {
-                 this->it = src.base();
-         
-                 return(*this);
+                this->it = src.base();
+        
+                return(reverse_iterator(*this));
              }
 
             iterator_type base() const
@@ -53,11 +53,10 @@ namespace ft{
                 return it;
             }
 
-             reference    operator*() const
+             reference    operator*()
              {
-                 Iter it1 = it;
-                 it1--;
-                 return *it1;
+                iterator_type it1 = it;
+                return ((--it1));
              }
              
              pointer operator->() const

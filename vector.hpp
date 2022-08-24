@@ -1,5 +1,5 @@
-#ifndef FT_CONTAINERS_HPP
-# define FT_CONTAINERS_HPP
+#ifndef VECTOR_HPP
+# define VECTOR_HPP
 
 # include <iostream>
 # include <memory>
@@ -20,8 +20,8 @@ namespace ft
             typedef typename allocator_type::const_reference const_reference;
             typedef typename allocator_type::pointer         pointer;
             typedef typename allocator_type::const_pointer   const_pointer;
-            typedef ft::random_access_iterator<pointer>          iterator;
-            typedef ft::random_access_iterator<const pointer>    const_iterator;
+            typedef ft::random_access_iterator<value_type>          iterator;
+            typedef ft::random_access_iterator<const value_type>    const_iterator;
             typedef std::size_t                              size_type;
             typedef ft::reverse_iterator<iterator>          reverse_iterator;
         typedef ft::reverse_iterator<const_iterator>    const_reverse_iterator; 
@@ -244,9 +244,9 @@ namespace ft
 
               iterator begin()
               {
-                iterator it;
-                it = this->_vector;
-                return it;
+                // iterator it;
+                // it = this->_vector;
+                return iterator(this->_vector);
               }
 
               iterator end()
