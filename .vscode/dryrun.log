@@ -1,0 +1,5 @@
+make --dry-run --always-make --keep-going --print-directory
+make: Entering directory `/Users/houbeid/Desktop/ft_container'
+clang++ --std=c++98 -Wall -Wextra -Werror -fsanitize=address -g3	Vector_tests_tle.cpp -o vector.out 
+make: Leaving directory `/Users/houbeid/Desktop/ft_container'
+ 
