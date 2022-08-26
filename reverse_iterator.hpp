@@ -9,8 +9,8 @@ namespace ft{
         public:
             typedef Iter                iterator_type;
             typedef Iter                value_type;
-            typedef Iter*                pointer;
-            typedef Iter&                reference;
+            typedef typename    Iter::pointer                pointer;
+            typedef typename    Iter::reference                  reference;
             typedef std::ptrdiff_t       difference_type;
             //typedef typename std::iterator_traits<iterator_type>::reference         reference;
         private:
@@ -53,10 +53,10 @@ namespace ft{
                 return it;
             }
 
-             reference    operator*()
+             reference    operator*() const
              {
                 iterator_type it1 = it;
-                return (--it1);
+                return *(--it1);
              }
              
              pointer operator->() const

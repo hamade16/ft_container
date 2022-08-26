@@ -9,13 +9,35 @@ using namespace std;
 int main()
 {
 
-    ft::vector<int> myvector;
-  for (int i=0; i<10; i++) myvector.push_back(i);
+  ft::vector<int> myvector (3,100);
+ // std::cout << myvector[0] << std::endl;
+  ft::vector<int>::iterator it;
 
-  ft::reverse_iterator<ft::vector<int>::iterator> from,until;
+  it = myvector.begin();
+  std::cout << *it << std::endl;
+  it = myvector.insert ( it , 200 );
+  std::cout << "myvector contains:";
+   for (it=myvector.begin(); it<myvector.end(); it++)
+      std::cout << ' ' << *it;
+    std::cout << '\n';
+    // std::vector<int> v(1, 15);
+    // v.push_back(20);
+    // v.push_back(25);
+    // v.push_back(30);
+    // std::reverse_iterator<std::vector<int>::iterator> it_rev;
+    // it_rev = v.rend();
+    // std::cout << it_rev[3] << std::endl;
+    // EQUAL(((*my_rit == *(v.end() - 1)) && (&(*my_rit) == &(*(v.end() - 1)))) && ((*rit == *(v.end() - 1)) && (&(*rit) == &(*(v.end() - 1)))));
 
-  from = myvector.rbegin();
-  until = myvector.rend();
+  //   ft::vector<int> myvector;
+  // for (int i=0; i<10; i++) myvector.push_back(i);
+
+  // ft::reverse_iterator<ft::vector<int>::iterator> from,until;
+
+  // from = myvector.rbegin();
+  // until = myvector.rend();
+
+
 //   std::cout << "myvector has " << (until-from) << " elements.\n";
 
   return 0;

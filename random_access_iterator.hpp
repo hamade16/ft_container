@@ -94,7 +94,7 @@ namespace ft{
                 }
                 reference    operator*() const
                 {
-                    return *it;
+                    return (*it);
                 }
                 pointer operator->() const
                 {

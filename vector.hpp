@@ -53,10 +53,14 @@ namespace ft
                 for(int i = 0; i < n; i++)
                     all.construct(_vector+i, val);
             }
-            ~vector()
-            {
 
-            }
+        //     template <class InputIterator>
+        //  vector (InputIterator first, InputIterator last,
+        //          const allocator_type& alloc = allocator_type())
+        //         {
+                   
+        //         }
+
             vector (const vector& x)
             {
                 this->all = x.all;
@@ -66,6 +70,11 @@ namespace ft
                 this->_max_size = x._max_size;
                 for(int i = 0; i < x._size; i++)
                     this->all.construct(this->_vector+i, x._vector[i]);
+            }
+
+            ~vector()
+            {
+
             }
 
             vector& operator= (const vector& x)
@@ -245,15 +254,14 @@ namespace ft
               iterator begin()
               {
                 // iterator it;
-                // it = this->_vector;
+                // it. = this->_vector;
+                // return (it);
                 return iterator(this->_vector);
               }
 
               iterator end()
               {
-                iterator it;
-                it = this->_vector+(_size);
-                return it;
+                return iterator(this->_vector+(_size));
               }
               reverse_iterator rbegin()
               {
@@ -264,6 +272,25 @@ namespace ft
               {
                 reverse_iterator rev_it(begin());
                 return (rev_it);
+              }
+
+              iterator insert (iterator position, const value_type& val)
+              {
+                if (_size == _capacite)
+                    _capacite *= 2;
+                _size += 1;
+                pointer v;
+                iterator it = this->begin();
+                v = all.allocate(_capacite);
+                for (int i = 0; i < _size; i++)
+                {
+                    if (it.base() == position.base())
+                        all.construct(v+i, val);
+                    else
+                        all.construct(v+i, this->_vector[i]);
+                }
+                this->_vector = v;
+                return (it);
               }
         /*vector(T a)
         {
