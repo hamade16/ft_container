@@ -274,23 +274,72 @@ namespace ft
                 return (rev_it);
               }
 
-              iterator insert (iterator position, const value_type& val)
-              {
-                if (_size == _capacite)
-                    _capacite *= 2;
-                _size += 1;
-                pointer v;
-                iterator it = this->begin();
-                v = all.allocate(_capacite);
-                for (int i = 0; i < _size; i++)
+            iterator insert(iterator position, const value_type &val)
+             {
+                size_type i = 0;
+                size_type o = position - this->begin();
+                if (_size == 0)
+                    push_back(val);
+                else
                 {
-                    if (it.base() == position.base())
-                        all.construct(v+i, val);
-                    else
-                        all.construct(v+i, this->_vector[i]);
+                    if (_size + 1 > _capacite)
+                        reserve(_capacite * 2);
+                    while (_size - i + 1 > 0)
+                    {
+                        if (_size - i == o)
+                        {
+                            all.construct(&_vector[_size - i] , val);
+                            break;
+                        }
+                        else
+                            all.construct(&_vector[_size - i] , _vector[_size - i - 1]);
+                        i++;
+                    }
+                    _size++;
                 }
-                this->_vector = v;
-                return (it);
+                return iterator(_vector + o);
+             }
+
+              void insert (iterator position, size_type n, const value_type& val)
+              {
+                size_type i = 0;
+                size_type o = position - this->begin();
+                // if (_size == 0)
+                // {
+                //     _capacite = n;
+                //    all.allocate(_capacite);
+                //     while (i < n)
+                //     {
+                //         all.construct(&_vector+i, val);
+                //         i++;
+                //     }
+                // }
+            
+                    if (_size + n > _capacite)
+                    {
+                        if (_size + n < _capacite*2)
+                            reserve(_capacite*2);
+                        else
+                        {
+                            reserve(_size + n);
+                            _capacite = _size + n;
+                        }
+                    }
+                    while (_size + n - i > 0)
+                    {
+                        if (_size - i  == o)
+                        {
+                            for(int j = 0; j < n; j++)
+                                all.construct(&_vector[_size - i + n - j] , val);
+                            break;
+                        }
+                        else
+                        {
+                            all.construct(&_vector[_size - i - 1 + n] , _vector[_size - i]);
+                        }
+                        i++;
+                    }
+                    _size += n;
               }
         /*vector(T a)
         {

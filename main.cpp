@@ -16,6 +16,7 @@ int main()
   it = myvector.begin();
   std::cout << *it << std::endl;
   it = myvector.insert ( it , 200 );
+  myvector.insert (it,2,300);
   std::cout << "myvector contains:";
    for (it=myvector.begin(); it<myvector.end(); it++)
       std::cout << ' ' << *it;
