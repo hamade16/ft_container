@@ -166,6 +166,7 @@ namespace ft
                     _capacite = n;
                     for(int i = 0; i < _size; i++)
                         all.construct(v + i, *(_vector+i));
+                    this->_vector = v;
                 }
             }
             
@@ -189,6 +190,7 @@ namespace ft
                             _capacite *= 2;
                     }
                     pointer v;
+
                     v = all.allocate(this->_capacite);
                     int i;
                     for (i = 0; i < this->_size; i++)
@@ -286,7 +288,7 @@ namespace ft
                         reserve(_capacite * 2);
                     while (_size - i + 1 > 0)
                     {
-                        if (_size - i == o)
+                        if (_size - i == o) // 2 1 55 44 55 
                         {
                             all.construct(&_vector[_size - i] , val);
                             break;
@@ -304,17 +306,40 @@ namespace ft
               {
                 size_type i = 0;
                 size_type o = position - this->begin();
-                // if (_size == 0)
-                // {
-                //     _capacite = n;
-                //    all.allocate(_capacite);
-                //     while (i < n)
-                //     {
-                //         all.construct(&_vector+i, val);
-                //         i++;
-                //     }
-                // }
-            
+                size_type m = n;
+                if (_size + n > _capacite)
+                {
+                    if (_size + n < _capacite*2)
+                        reserve(_capacite*2);
+                    else
+                    {
+                        reserve(_size + n);
+                        _capacite = _size + n;
+                    }
+                }
+                while (_size - i  + n > 0)
+                {
+                    if (_size - i  == o)
+                    {
+                        while(m--)
+                            all.construct(&_vector[_size - i + m] , val);
+                        break;
+                    }
+                    else
+                    {
+                        all.construct(&_vector[_size - i - 1 + n] , _vector[_size - i - 1]);
+                    }
+                    i++;
+                }
+                    _size += n;
+              }
+
+              template <class InputIterator>
+               void insert (iterator position, InputIterator first, typename ft::enable_if<ft::is_integral<InputIterator>::type> last)
+               {
+                    size_type o = position - this->begin();
+                    size_type n = last - first;
+                    size_type i = 0;
                     if (_size + n > _capacite)
                     {
                         if (_size + n < _capacite*2)
@@ -325,27 +350,12 @@ namespace ft
                             _capacite = _size + n;
                         }
                     }
-                    while (_size + n - i > 0)
+                    while (_size - i + n > 0)
                     {
-                        if (_size - i  == o)
-                        {
-                            for(int j = 0; j < n; j++)
-                                all.construct(&_vector[_size - i + n - j] , val);
-                            break;
-                        }
-                        else
-                        {
-                            all.construct(&_vector[_size - i - 1 + n] , _vector[_size - i]);
-                        }
-                        i++;
+                        if ()
                     }
-                    _size += n;
-              }
-        /*vector(T a)
-        {
-            arr = all.allocate(10);
-            all.constuct(arr+0, a);
-        }*/
+
+               }
     };
 };
 
