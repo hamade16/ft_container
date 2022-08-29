@@ -15,9 +15,12 @@ int main()
 
   it = myvector.begin();
   it = myvector.insert ( it , 200);
-  it = myvector.insert ( it , 500);
-  it = myvector.insert ( it , 600);
-  myvector.insert (it,3,300);
+  myvector.insert (it,2,300);
+  // it = myvector.begin();
+  ft::vector<int> anothervector (2,400);
+  myvector.insert (it+2,anothervector.begin(),anothervector.end());
+  int myarray [] = { 501,502,503 };
+  myvector.insert (myvector.begin(), myarray, myarray+3);
   std::cout << "myvector contains:";
    for (it=myvector.begin(); it<myvector.end(); it++)
       std::cout << ' ' << *it;

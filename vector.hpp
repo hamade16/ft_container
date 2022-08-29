@@ -7,6 +7,8 @@
 
 #include "random_access_iterator.hpp"
 #include "reverse_iterator.hpp"
+#include "enable_if.hpp"
+#include "is_integral.hpp"
 
 namespace ft
 {
@@ -288,7 +290,7 @@ namespace ft
                         reserve(_capacite * 2);
                     while (_size - i + 1 > 0)
                     {
-                        if (_size - i == o) // 2 1 55 44 55 
+                        if (_size - i == o) 
                         {
                             all.construct(&_vector[_size - i] , val);
                             break;
@@ -335,10 +337,11 @@ namespace ft
               }
 
               template <class InputIterator>
-               void insert (iterator position, InputIterator first, typename ft::enable_if<ft::is_integral<InputIterator>::type> last)
+               void insert (iterator position, InputIterator first, typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type last)
                {
                     size_type o = position - this->begin();
                     size_type n = last - first;
+                    size_type m = n;
                     size_type i = 0;
                     if (_size + n > _capacite)
                     {
@@ -352,9 +355,22 @@ namespace ft
                     }
                     while (_size - i + n > 0)
                     {
-                        if ()
+                        if (_size - i == o)
+                        {
+                            while (n--)
+                            {
+                                all.construct(&_vector[_size - i + n], *(last - 1));
+                                last--;
+                            }
+                            break;
+                        }
+                        else
+                        {
+                            all.construct(&_vector[_size - i - 1 + n] , _vector[_size - i - 1]);
+                        }
+                        i++;
                     }
-
+                    _size += m;
                }
     };
 };
