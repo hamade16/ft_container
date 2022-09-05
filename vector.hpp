@@ -372,6 +372,76 @@ namespace ft
                     }
                     _size += m;
                }
+
+               void assign (size_type n, const value_type& val)
+               {
+                   size_type i = _size;
+                   if (_size + n < _capacite)
+                   {
+                       while (i < _size + n)
+                       {
+                            all.construct(&_vector[i] , val);
+                           i++;
+                       }
+                   }
+                   else
+                   {
+                       if (_size + n < _capacite*2)
+                            reserve(_capacite*2);
+                        else
+                        {
+                            reserve(_size + n);
+                            _capacite = _size + n;
+                        }
+                        while (i < _size + n)
+                        {
+                             all.construct(&_vector[i] , val);
+                            i++;
+                        }
+                   }
+                   _size += n;
+               }
+
+               template <class InputIterator>
+                void assign (InputIterator first, typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type last)
+                {
+                    size_type n = last - first;
+                    size_type i = _size;
+                    size_type m = n;
+                    if (_size + n < _capacite)
+                    {
+                        while (m--)
+                        {
+                            all.construct(&_vector[i], *first);
+                            first++;
+                        }
+                    }
+                    else
+                    {
+                        if (_size + n < _capacite*2)
+                            reserve(_capacite*2);
+                        else
+                        {
+                            reserve(_size + n);
+                            _capacite = _size + n;
+                        }
+                        while (i < _size + n)
+                        {
+                            all.construct(&_vector[i], *first);
+                            i++;
+                            first++;
+                        }
+                    }
+                    _size += n;
+                }
+
+                iterator erase (iterator position)
+                {
+                    for (size_type o = position - _vector; o < _size - 1; ++o)
+                        _vector[o] = _vector[o + 1];
+                    _size--;
+                    return (position);
+                }
     };
 };
 

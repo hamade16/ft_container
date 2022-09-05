@@ -10,7 +10,7 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 make: *** No rule to make target `all'.  Stop.
 
 
-# Make data base, printed on Fri Aug 26 15:40:13 2022
+# Make data base, printed on Mon Aug 29 20:58:00 2022
 
 # Variables
 
@@ -41,7 +41,7 @@ VERBOSE_LOGGING = true
 # environment
 __CFBundleIdentifier = com.microsoft.VSCode
 # environment
-VSCODE_IPC_HOOK_EXTHOST = /var/folders/_d/ffjgzmh92flbhgsmdgstm10h0000gn/T/vscode-ipc-f56c6c5b-07e2-4db0-ade5-c52c4ec3f514.sock
+VSCODE_IPC_HOOK_EXTHOST = /var/folders/_d/ffjgzmh92flbhgsmdgstm10h0000gn/T/vscode-ipc-bdf7974a-1089-4c95-9831-853c70a79ae8.sock
 # environment
 PATH = /Users/houbeid/goinfre/houbeid/.brew/bin:/Users/houbeid/miniconda3/bin:/Users/houbeid/miniconda3/condabin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin
 # environment
@@ -55,7 +55,7 @@ ELECTRON_RUN_AS_NODE = 1
 # default
 .FEATURES := target-specific order-only second-expansion else-if archives jobserver check-symlink
 # environment
-SSH_AUTH_SOCK = /private/tmp/com.apple.launchd.qEjXJdWST7/Listeners
+SSH_AUTH_SOCK = /private/tmp/com.apple.launchd.h562F0iN0W/Listeners
 # automatic
 %F = $(notdir $%)
 # environment
@@ -75,6 +75,7 @@ LOGNAME = houbeid
 # environment
 APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = true
 # environment
+ 
 CONDA_PROMPT_MODIFIER = (base) 
 # environment
 ZSH = /Users/houbeid/.oh-my-zsh
@@ -161,7 +162,7 @@ MAKELEVEL := 0
 # environment
 CONDA_PREFIX = /Users/houbeid/miniconda3
 # environment
-VSCODE_PID = 1364
+VSCODE_PID = 8579
 # environment
 _CE_CONDA = 
 # environment
@@ -192,12 +193,9 @@ all:
 #  File does not exist.
 #  File has not been updated.
 # variable set hash-table stats:
- 
 # Load=0/32=0%, Rehash=0, Collisions=0/0=0%
 
- 
 # Not a target:
- 
 .SUFFIXES:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
@@ -279,6 +277,6 @@ stack:
 # strcache size: total = 4096 / max = 4096 / min = 4096 / avg = 4096
 # strcache free: total = 4087 / max = 4087 / min = 4087 / avg = 4087
 
-# Finished Make data base on Fri Aug 26 15:40:13 2022
+# Finished Make data base on Mon Aug 29 20:58:00 2022
 
  
