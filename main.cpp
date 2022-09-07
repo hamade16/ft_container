@@ -8,21 +8,24 @@
 using namespace std;
 int main()
 {
-  ft::vector<int> myvector;
+  ft::vector<int> first;
+  ft::vector<int> second;
+  ft::vector<int> third;
 
-  // set some values (from 1 to 10)
-  for (int i=1; i<=10; i++) myvector.push_back(i);
+  first.assign (7,100);             // 7 ints with a value of 100
 
-  // erase the 6th element
-  myvector.erase (myvector.begin()+5);
+  ft::vector<int>::iterator it;
+  it=first.begin()+1;
 
-  // erase the first 3 elements:
-  //myvector.erase (myvector.begin(),myvector.begin()+3);
+  second.assign (it,first.end()-1); // the 5 central values of first
 
-  std::cout << "myvector contains:";
-  for (unsigned i=0; i<myvector.size(); ++i)
-    std::cout << ' ' << myvector[i];
-  std::cout << '\n';
+  int myints[] = {1776,7,4};
+  third.assign (myints,myints+3);   // assigning from array.
+
+  std::cout << "Size of first: " << int (first.size()) << '\n';
+  std::cout << "Size of second: " << int (second.size()) << '\n';
+  std::cout << "Size of third: " << int (third.size()) << '\n';
+
   // ft::vector<int> first;
   // ft::vector<int> second;
   // std::vector<int> third;

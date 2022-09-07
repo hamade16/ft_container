@@ -112,7 +112,7 @@ namespace ft{
 
             reference operator[] (difference_type n) const
             {
-                return *(this->it + n);
+                return *(this->it - n - 1);
             }
 
 
