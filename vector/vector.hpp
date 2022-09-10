@@ -417,10 +417,10 @@ namespace ft
 
                void assign (size_type n, const value_type& val)
                {
-                   size_type i = _size;
-                   if (_size + n < _capacite)
+                   size_type i = 0;
+                   if (n < _capacite)
                    {
-                       while (i < _size + n)
+                       while (i < n)
                        {
                             all.construct(&_vector[i] , val);
                            i++;
@@ -428,53 +428,54 @@ namespace ft
                    }
                    else
                    {
-                       if (_size + n < _capacite*2)
+                       if (n < _capacite*2)
                             reserve(_capacite*2);
                         else
                         {
-                            reserve(_size + n);
-                            _capacite = _size + n;
+                            reserve(n);
+                            _capacite = n;
                         }
-                        while (i < _size + n)
+                        while (i < n)
                         {
                              all.construct(&_vector[i] , val);
                             i++;
                         }
                    }
-                   _size += n;
+                   _size = n;
                }
 
                template <class InputIterator>
                 void assign (InputIterator first, typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type last)
                 {
                     size_type n = last - first;
-                    size_type i = _size;
+                    size_type i = 0;
                     size_type m = n;
-                    if (_size + n < _capacite)
+                    if (n <= _capacite)
                     {
                         while (m--)
-                        {
-                            all.construct(&_vector[i], *first);
-                            first++;
-                        }
-                    }
-                    else
-                    {
-                        if (_size + n < _capacite*2)
-                            reserve(_capacite*2);
-                        else
-                        {
-                            reserve(_size + n);
-                            _capacite = _size + n;
-                        }
-                        while (i < _size + n)
                         {
                             all.construct(&_vector[i], *first);
                             i++;
                             first++;
                         }
                     }
-                    _size += n;
+                    else
+                    {
+                        if (n < _capacite*2)
+                            reserve(_capacite*2);
+                        else
+                        {
+                            reserve(n);
+                            _capacite = n;
+                        }
+                        while (i < n)
+                        {
+                            all.construct(&_vector[i], *first);
+                            i++;
+                            first++;
+                        }
+                    }
+                    _size = n;
                 }
 
                 iterator erase (iterator position)
@@ -550,7 +551,7 @@ namespace ft
     template <class T, class Alloc>
         bool operator>= (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs)
         {
-            return (!(rhs < lhs));
+            return (!(lhs < rhs));
         }
 
     template <class T, class Alloc>
