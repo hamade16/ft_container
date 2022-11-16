@@ -112,14 +112,8 @@ namespace ft
                 return Rightrotate(y);
             }
 
-            Node*   Rightrotate(Node* y)
+            Node*   leftrotate(Node* y)
             {
-                /*Node *x = y->left;
-                Node *z = x->right;
-
-                y->left = z;
-                y->left->left = x;
-                Node *t = llRotate(y);*/
                 Node *tmp = y->left;
                 tmp->right = y;
                 tmp->parent = y->parent;
@@ -127,7 +121,7 @@ namespace ft
                 return tmp;
             }
 
-            Node* leftrotate(Node* y)
+            Node* rightrotate(Node* y)
             {
                Node* tmp = y->right;
                tmp->left = y;
@@ -139,8 +133,8 @@ namespace ft
             Node* RLrotate(Node* y)
             {
                 Node *tmp = y->right;
-                tmp = Rightrotate(tmp);
-                return (leftrotate);
+                tmp = leftrotate(tmp);
+                return (rightrotate);
             }
 
             Node* insert(Node* node, value_type x)
@@ -151,21 +145,35 @@ namespace ft
                 }
                 if (x.first < node->data->first)
                     node->left = insert(node->left, x);
-                else if (x > node->key)
+                else if (x.first > node->data->key)
                     node->right = insert(node->right, x);
                 else 
                     return (node);
                 node->height = 1 + max(height(node->left), height(node->right));
                 node->balance_factor = getbalance(node);
+                if (node->balance_factor < -1)
+                {
+                    if (node->right->balance_factor <= 0)
+                        return (Rightrotate(node));
+                    else
+                        return (RLrotate(node));
+                }
+                else if(node->balance_factor > 1)
+                {
+                    if (node->left->balance_factor >= 0)
+                        return (leftrotate(node));
+                    else
+                        return (lRrotate(node));
+                }
 
-                if (node->balance_factor < -1 && x < node->right->key)
-                    return(RLrotate(node));
-                if (node->balance_factor < -1 && x > node->right->key)
-                    return (RRrotate(node));
-                if (node->balance_factor > 1 && x < node->left->key)
-                    return (llrotate(node));
-                if (node->balance_factor > 1 && x > node->left->key)
-                    return (lRrotate(node));
+                // if (node->balance_factor < -1 && x < node->right->key)
+                //     return(RLrotate(node));
+                // if (node->balance_factor < -1 && x > node->right->key)
+                //     return (RRrotate(node));
+                // if (node->balance_factor > 1 && x < node->left->key)
+                //     return (llrotate(node));
+                // if (node->balance_factor > 1 && x > node->left->key)
+                //     return (lRrotate(node));
 
                 return (node);
             }
