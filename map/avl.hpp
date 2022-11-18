@@ -15,20 +15,37 @@ namespace ft
             typedef T2 seconde_type;
         public: 
             first_type first;
-            seconde_type seconde;
-            pair(): first(), seconde()
+            seconde_type second;
+            pair(): first(), second()
             {
 
             }
-            pair(pair<T1,T2> &pr): first(pr.first), seconde(pr.seconde)
+
+            pair(pair<T1,T2> &pr)
             {
+                this->first = pr.first;
+                this->second = pr.second;
 
             }
-            pair(first_type x, seconde_type y) : first(x), seconde(y)
+            pair(first_type x, seconde_type y)
             {
-
+                
             }
+            pair& operator= (const pair& pr)
+            {
+                this->first = pr.first;
+                this->second = pr.second;
+                return *this;
+            }
+
     };
+
+    template <class T1,class T2>
+    pair<T1,T2> make_pair (T1 x, T2 y)
+    {
+        pair<T1,T2> p;
+      return (p);
+    }
 
     template<typename pair>
     class Node
@@ -108,13 +125,14 @@ namespace ft
             Node*   lRrotate(Node* y)
             {
                 Node *tmp = y->left;
-                tmp = leftrotate(tmp);
-                return Rightrotate(y);
+                tmp = rightrotate(tmp);
+                return leftrotate(y);
             }
 
             Node*   leftrotate(Node* y)
             {
                 Node *tmp = y->left;
+                y->left = tmp->right; 
                 tmp->right = y;
                 tmp->parent = y->parent;
                 y->parent = tmp;
@@ -124,6 +142,7 @@ namespace ft
             Node* rightrotate(Node* y)
             {
                Node* tmp = y->right;
+               y->right = tmp->left;
                tmp->left = y;
                tmp->parent = y->parent;
                y->parent = tmp;
@@ -165,16 +184,6 @@ namespace ft
                     else
                         return (lRrotate(node));
                 }
-
-                // if (node->balance_factor < -1 && x < node->right->key)
-                //     return(RLrotate(node));
-                // if (node->balance_factor < -1 && x > node->right->key)
-                //     return (RRrotate(node));
-                // if (node->balance_factor > 1 && x < node->left->key)
-                //     return (llrotate(node));
-                // if (node->balance_factor > 1 && x > node->left->key)
-                //     return (lRrotate(node));
-
                 return (node);
             }
     };

@@ -4,27 +4,14 @@
 
 int main()
 {
-    // Node<int÷÷> node(10);
-    // std::map<int, char> map;
+    ft::pair <int,int> foo;
+    ft::pair <int,int> bar;
 
-    // std::pair<int, char> val(1337, 'H');
-    
-    // map.insert(val);
-    
-    // std::cout << map.at(1337);
-    // avl<int> tree;
-    // tree.a  = tree.insert(tree.a, 2);
-    std::map
-    avl<int> root;
-     
-    /* Constructing tree given in
-    the above figure */
-    root.insert(root.a, 10);
-    root.insert(root.a, 20);
-    root.insert(root.a, 30);
-    root.insert(root.a, 40);
-    root.insert(root.a, 50);
-    root.insert(root.a, 25);
+    foo = ft::make_pair (10,20);
+    //bar = ft::make_pair (10.5,'A'); // ok: implicit conversion from pair<double,char>
+
+    //std::cout << "foo: " << foo.first << ", " << foo.second << '\n';
+    //std::cout << "bar: " << bar.first << ", " << bar.second << '\n';
 
 
     return 0;
