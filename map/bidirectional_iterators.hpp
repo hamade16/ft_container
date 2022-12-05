@@ -53,7 +53,7 @@ namespace ft
 				return (&this->_node->data);
 			}
 			iterator& operator ++ () {
-				this->_node = _avl->incrementation(_node);
+				this->_node = _avl.incrementation(_node);
 				return (*this);
 			}
 			iterator operator ++ (int) {

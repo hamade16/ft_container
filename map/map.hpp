@@ -71,7 +71,8 @@ namespace ft
             /*-----------------------------iterators-------------------------------------------------------------------------------*/
             iterator    begin()
             {
-                return(iterator(_tree.min_node()));
+                 iterator it(_tree.min_node(_tree._root), _tree._root);
+                return(it);
             }
 
             // const_iterator begin() const
@@ -82,7 +83,7 @@ namespace ft
             iterator end()
             {
                 // node* root = NULL;
-                iterator it(_tree.max_node(), _tree._root);
+                iterator it(_tree.max_node(_tree._root), _tree._root);
                 // return (it);
                 return (it);
             }

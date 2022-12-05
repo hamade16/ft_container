@@ -115,17 +115,17 @@ namespace ft
                 return (_size);
             }
 
-            node_type *min_node()
+            node_type *min_node(node_type *root)
             {
-                node_type *current = this->_root;
-			    while (current->left != NULL)
+                node_type *current = root;
+			    while (current != NULL)
 				    current = current->left;
-			    return current;
+			    return current->parent;
             }
 
-            node_type *max_node()
+            node_type *max_node(node_type *root)
             {
-                node_type *current = this->_root;
+                node_type *current = root;
 			    while (current != NULL)
 				    current = current->right;
 			    return current;
@@ -187,9 +187,9 @@ namespace ft
                 _root = NULL;
             }
 
-            node_type *incrementation(node_type *node) const
+            node_type *incrementation(node_type *node)
 			{
-				if (node == max_node() || node == NULL)
+				if (node == max_node(this->_root) || node == NULL)
 				{
 					return NULL;
 				}
@@ -199,7 +199,7 @@ namespace ft
 
             const node_type *incrementation(const node_type *node) const
 			{
-				if (node == max_node() || node == NULL)
+				if (node == max_node(this->_root) || node == NULL)
 				{
 					return NULL;
 				}
@@ -207,7 +207,7 @@ namespace ft
 			}
 
 
-            node_type* incrementation(node_type *root, key_type k) const
+            node_type* incrementation(node_type *root, key_type k) 
 			{
 				node_type *succ = NULL;
 				while (true)
@@ -222,26 +222,26 @@ namespace ft
 					else
 					{
 						if (root->right != NULL)
-							succ = min_value_node(root->right);
+							succ = min_node(root->right);
 						break;
 					}
 				}
 				if (succ == NULL)
-					return max_node();
+					return max_node(this->_root);
 				return succ;
 			}
 
             node_type *decrementation(node_type *node) const
 			{
-				if (node == max_node())
-					return max_value_node(this->_root);
+				if (node == max_node(this->_root))
+					return max_node(this->_root);
 				return decrementation(_root, node->data.first);
 			}
 
             const node_type *decrementation(const node_type *node) const
 			{
-				if (node == max_node())
-					return max_value_node(this->_root);
+				if (node == max_node(this->_root))
+					return max_node(this->_root);
 				return decrementation(_root, node->data.first);
 			}
 
@@ -260,7 +260,7 @@ namespace ft
 		    		else
 		    		{
 		    			if (rt->left!= NULL)
-		    				pred = max_value_node(rt->left);
+		    				pred = max_node(rt->left);
 		    			break;
 		    		}
 		    		if (rt == NULL)
