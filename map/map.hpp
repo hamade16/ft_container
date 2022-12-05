@@ -4,30 +4,140 @@
 # include <iostream>
 # include <memory>
 # include <map>
+#include "avl.hpp"
+# include "../utils/pair.hpp"
+# include "./bidirectional_iterators.hpp"
 
-namespace
+namespace ft
 {
-    template <class Key, class T, class Compare = less<Key>,
-          class Allocator = allocator<pair<const Key, T>>>
+    template <class Key, class T, class Compare = std::less<Key>,
+          class Allocator = std::allocator<ft::pair<const Key, T> > >
     class map
     {
-        typedef Key                                      key_type;
-        typedef T                                        mapped_type;
-        typedef pair<const key_type, mapped_type>        value_type;
-        typedef Compare                                  key_compare;
-        typedef Allocator                                allocator_type;
-        typedef typename allocator_type::reference       reference;
-        typedef typename allocator_type::const_reference const_reference;
-        typedef typename allocator_type::pointer         pointer;
-        typedef typename allocator_type::const_pointer   const_pointer;
-        typedef typename allocator_type::size_type       size_type;
-        typedef typename allocator_type::difference_type difference_type;
+        public:
+            typedef Key                                      key_type;
+            typedef T                                        mapped_type;
+            typedef ft::pair<const key_type, mapped_type>        value_type;
+            typedef Compare                                  key_compare;
+            typedef Allocator                                allocator_type;
+            typedef ft::avl<mapped_type, key_type, key_compare, allocator_type> tree;
+            typedef typename allocator_type::reference       reference;
+            typedef typename allocator_type::const_reference const_reference;
+            typedef typename allocator_type::pointer         pointer;
+            typedef typename allocator_type::const_pointer   const_pointer;
+            typedef Node<value_type>                         node;
+            typedef ft::bidirectional_iterators<value_type, tree, node> iterator;
+            // typedef typename std::map<Key, T>::iterator     iterator;
+            // typedef ft::bidirectional_iterators<const value_type, tree> const_iterator;
+            typedef typename allocator_type::size_type       size_type;
+            typedef typename allocator_type::difference_type difference_type;
 
         private:
-            value_type  pair;
-            pointer     *left;
-            pointer     *right;
-    }
-}
+            tree    _tree;
+            key_compare _compare;
+            allocator_type  _alloc;
+        public: 
+            
+            explicit map (const key_compare& comp = key_compare(), const allocator_type& alloc = allocator_type()): _tree(comp, alloc), _compare(comp), _alloc(alloc){};
+
+            template <class InputIterator>
+            map (InputIterator first, InputIterator last, const key_compare& comp = key_compare(), const allocator_type& alloc = allocator_type()) : _tree(comp, alloc), _compare(comp), _alloc(alloc)
+            {
+                while (first != last)
+                {
+                    insert(*first);
+                    first++;
+                }
+            }
+        
+            map (const map& x)
+            {
+                this = x;
+            }
+
+            map& operator= (const map& x)
+            {
+                _tree.clear();
+                this->_alloc = x._alloc;
+                this->_compare = x._compare;
+                iterator it = x.begin();
+                while (it++)
+                {
+                    this->insert(*it);
+                }
+                return (*this);
+            }
+
+            /*-----------------------------iterators-------------------------------------------------------------------------------*/
+            iterator    begin()
+            {
+                return(iterator(_tree.min_node()));
+            }
+
+            // const_iterator begin() const
+            // {
+            //     return(iterator(_tree.min_node()));
+            // }
+
+            iterator end()
+            {
+                return (iterator(_tree.max_node()));
+            }
+
+            // const_iterator end() const
+            // {
+            //     return (iterator(_tree.max_node()));
+            // }
+
+/*------------------------------------------------capacity----------------------------------------------*/
+
+        size_type size() const
+        {
+            return (_tree.size());
+        }
+
+         bool empty() const
+        {
+            return !(_tree.size);
+        }
+
+        /*------------------------------------------------element acces----------------------------------------------------------------*/
+        mapped_type& operator[] (const key_type& k)
+        {
+            value_type tmp = ft::make_pair(k,mapped_type());
+            insert(tmp);
+            return (_tree.search(k)->data->second);
+        }
+/*-----------------------------modifiers-----------------------------------------------------------------------------------------------*/
+            ft::pair<iterator,bool> insert (const value_type& val)
+            {
+                unsigned int old_size = _tree.size();
+                _tree.insert(val);
+                // if (_tree.size() == old_size)
+                    // return(ft::make_pair(iterator(_tree.new_node_all), false));
+                // return(ft::make_pair(iterator(_tree.new_node_all), true));
+                return (ft::make_pair(iterator(), false));
+            }
+
+            iterator insert (iterator position, const value_type& val)
+            {
+                insert(val);
+                return position;
+            }
+            // template <class InputIterator>
+            // void insert (InputIterator first, InputIterator last)
+            // {
+            //     while (first != last)
+            //     {
+            //         this->insert(*first);
+            //         first++;
+            //     }
+            // }
+
+
+
+    };
+};
+#endif
 
 

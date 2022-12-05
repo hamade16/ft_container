@@ -1,18 +1,24 @@
-#include "avl.hpp"
-#include <map>
+#include "map.hpp"
 
 
 int main()
 {
-    ft::pair <int,int> foo;
-    ft::pair <int,int> bar;
+    // std::map<char*, char*> p;
+    // p.insert(std::make_pair("h", "hshhs"));
+    // std::map<char*, char*>::iterator  it = p.begin();
+    // std::cout << *it->first << std::endl;
+    ft::map<char,std::string> mymap;
 
-    foo = ft::make_pair (10,20);
-    //bar = ft::make_pair (10.5,'A'); // ok: implicit conversion from pair<double,char>
+    mymap['a'];
+//   mymap['b']="another element";
+//   mymap['c']=mymap['b'];
 
-    //std::cout << "foo: " << foo.first << ", " << foo.second << '\n';
-    //std::cout << "bar: " << bar.first << ", " << bar.second << '\n';
+//   std::cout << "mymap['a'] is " << mymap['a'] << '\n';
+//   std::cout << "mymap['b'] is " << mymap['b'] << '\n';
+//   std::cout << "mymap['c'] is " << mymap['c'] << '\n';
+//   std::cout << "mymap['d'] is " << mymap['d'] << '\n';
 
+//   std::cout << "mymap now contains " << mymap.size() << " elements.\n";
 
     return 0;
 }

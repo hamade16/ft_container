@@ -4,67 +4,10 @@
 
 #include <iostream>
 #include <functional>
+#include "../utils/pair.hpp"
+
 namespace ft
 {
-
-    template<class T1, class T2>
-    class pair 
-    {
-        public: 
-            typedef T1 first_type;
-            typedef T2 seconde_type;
-        public: 
-            first_type first;
-            seconde_type second;
-            pair(): first(), second()
-            {
-
-            }
-
-            pair(pair<T1,T2> &pr)
-            {
-                this->first = pr.first;
-                this->second = pr.second;
-
-            }
-            pair(first_type x, seconde_type y)
-            {
-                
-            }
-            pair& operator= (const pair& pr)
-            {
-                this->first = pr.first;
-                this->second = pr.second;
-                return *this;
-            }
-
-    };
-
-    template <class T1,class T2>
-    pair<T1,T2> make_pair (T1 x, T2 y)
-    {
-        pair<T1,T2> p;
-      return (p);
-    }
-
-    template<typename pair>
-    class Node
-    {
-        public:
-            Node(){
-
-            };
-            ~Node(){
-
-            };
-            pair *data;
-            Node<pair> *left;
-            Node<pair> *right;
-            Node<pair> *parent;
-            size_t height;
-            int balance_factor;
-    };
-
     template<class T, class key, class Compare = std::less<key>, class Alloc = std::allocator<ft::pair<key,T> > >
     class avl
     {
@@ -72,32 +15,38 @@ namespace ft
             typedef T mapped_type;
             typedef key key_type;
             typedef Alloc allocator_type;
+            typedef Compare							key_compare;
             typedef ft::pair<key_type, mapped_type> value_type;
             typedef Node<value_type> Node;
+            Node    *new_node_all;
         private: 
             allocator_type _all;
-            Compare _compare;
+            key_compare _compare;
+            Node    *_root;
+            unsigned int											_size;
+            typename allocator_type::template rebind<Node>::other	_node_allocator;
         public:
-            Node *a;
-            avl(){
-                a = NULL;
+            avl(const key_compare& comp = key_compare(), const allocator_type& alloc = allocator_type()): _root(NULL), _compare(comp), _all(alloc), _size(0)
+            {
+                
             }
             ~avl()
             {
 
             }
-            Node *new_node(value_type x)
+            Node *new_node(const value_type &x)
             {
                 //node* newNode(int key);
-                Node* node1;
-                node1->data = _all.allocate(1);
-                _all.construct(node1->data, x);
+                Node * node1 = _all.allocate(1);
+                new_node_all = node1;
+                _all.construct(node1, x);
                 node1->left = NULL;
                 node1->right = NULL;
                 node1->parent = NULL;
                 node1->height = 1; // new node is initially
                                   // added at leaf
-                node1->balance_fator = 0;                  
+                node1->balance_factor = 0;
+                _size++;                  
                 return(node1);
             }
 
@@ -153,18 +102,45 @@ namespace ft
             {
                 Node *tmp = y->right;
                 tmp = leftrotate(tmp);
-                return (rightrotate);
+                return (rightrotate(y));
+            }
+
+            void	insert(const value_type &data)
+		    {
+		    	_root = insert(_root, data);
+		    }
+
+            unsigned int size() const
+            {
+                return (_size);
+            }
+
+            Node *min_node()
+            {
+                Node *current = this->_root;
+			    while (current->left != NULL)
+				    current = current->left;
+			    return current;
+            }
+
+            Node *max_node()
+            {
+                Node *current = this->_root;
+			    while (current->right != NULL)
+				    current = current->right;
+			    return current;
             }
 
             Node* insert(Node* node, value_type x)
             {
+                new_node_all = NULL;
                 if (node == NULL)
                 {
                   return (new_node(x));
                 }
                 if (x.first < node->data->first)
                     node->left = insert(node->left, x);
-                else if (x.first > node->data->key)
+                else if (x.first > node->data->first)
                     node->right = insert(node->right, x);
                 else 
                     return (node);
@@ -185,6 +161,135 @@ namespace ft
                         return (lRrotate(node));
                 }
                 return (node);
+            }
+
+            void    swap(avl &other)
+            {
+                std::swap(this->_all, other._all);
+                std::swap(this->_compare, other._compare);
+                std::swap(this->_size, other._size);
+                std::swap(this->_root, other._root);
+            }
+
+            void clear(Node *node)
+		    {
+		    	if (node == NULL)
+		    		return;
+		    	clear(node->left);
+		    	clear(node->right);
+		    	_node_allocator.destroy(node);
+		    	_node_allocator.deallocate(node, 1);
+		    }
+
+            void    clear()
+            {
+                clear(this->_root);
+                _root = NULL;
+            }
+
+            Node *incrementation(Node *node) const
+			{
+				if (node == max_node() || node == NULL)
+				{
+					return NULL;
+				}
+				return (incrementation(_root, node->data.first));
+			}
+
+
+            const Node *incrementation(const Node *node) const
+			{
+				if (node == max_node() || node == NULL)
+				{
+					return NULL;
+				}
+				return (incrementation(_root, node->data.first));
+			}
+
+
+            Node* incrementation(Node *root, key_type k) const
+			{
+				Node *succ = NULL;
+				while (true)
+				{
+					if (_compare(k, root->data.first))
+					{
+						succ = root;
+						root = root->left;
+					}
+					else if (_compare(root->data.first, k))
+						root = root->right;
+					else
+					{
+						if (root->right != NULL)
+							succ = min_value_node(root->right);
+						break;
+					}
+				}
+				if (succ == NULL)
+					return max_node();
+				return succ;
+			}
+
+            Node *decrementation(Node *node) const
+			{
+				if (node == max_node())
+					return max_value_node(this->_root);
+				return decrementation(_root, node->data.first);
+			}
+
+            const Node *decrementation(const Node *node) const
+			{
+				if (node == max_node())
+					return max_value_node(this->_root);
+				return decrementation(_root, node->data.first);
+			}
+
+            Node* decrementation(Node *rt, key_type k) const
+		    {
+		    	Node* pred = NULL;
+		    	while (true)
+		    	{
+		    		if (_compare(k, rt->data.first))
+		    			rt = rt->left;
+		    		else if (_compare(rt->data.first, k))
+		    		{
+		    			pred = rt;
+		    			rt = rt->right;
+		    		}
+		    		else
+		    		{
+		    			if (rt->left!= NULL)
+		    				pred = max_value_node(rt->left);
+		    			break;
+		    		}
+		    		if (rt == NULL)
+		    			return NULL;
+		    	}
+		    	return pred;
+		    }
+
+            Node*   search(key_type k) const
+            {
+                return search(_root, k);
+            }
+
+            Node* search(Node *root, key_type k) const
+            {
+                if (root == NULL)
+                        return NULL;
+                else if (_compare(k, root->data->first))
+                {
+                        Node* rt = search(root->left, k);
+                        return rt;
+                }
+                else if (_compare(root->data->first, k))
+                {
+                        Node* rt = search(root->right, k);
+                        return rt;
+                }
+                else
+                        return root;
             }
     };
 }

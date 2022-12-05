@@ -8,7 +8,6 @@ namespace ft{
 
         public:
             typedef Iter                iterator_type;
-            //typedef Iter                value_type;
             typedef Iter*                pointer;
             typedef Iter&                reference;
             typedef std::ptrdiff_t       difference_type;
