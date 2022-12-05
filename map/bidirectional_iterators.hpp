@@ -7,101 +7,73 @@
 
 namespace ft
 {
-    template<typename pair, typename avl, typename Node>
-    class bidirectional_iterators
-    {
-        public:
-            typedef Node*                      node_pointer;
-            typedef pair                      *pointer;
-            typedef pair                      &reference;
-            typedef std::ptrdiff_t       difference_type;
-            avl             *_avl;
-        private:
-            node_pointer    _node;
-        public:
-            bidirectional_iterators()
-            {
-                _node = NULL;
-            }
+    template <typename T, typename Node, typename Avl>
+	class iterator // bidirectional_iterator
+	{
+		public:
+			typedef	iterator						iterator_type;
+			typedef	std::bidirectional_iterator_tag	iterator_category;
+			typedef	T								value_type;
+			typedef	ptrdiff_t						difference_type;
+			typedef	value_type*						pointer;
+			typedef const pointer					const_pointer;
+			typedef	value_type&						reference;
 
-            bidirectional_iterators(Node* node) : _node(node)
-            {
-            }
+		public:
+			Avl		_avl;
+			Node*	_node;
+			Node*	_root;
 
-            // template<typename p, typename av>
-            // bidirectional_iterators(bidirectional_iterators<pair, av> const & src)
-            // {
-            //     this->_node = src._node;
-            // }
+		public:
+			// construct && destruct
+			iterator() : _avl(), _node(NULL), _root(NULL) {};
+			iterator(Node* node, Node* root) : _avl(), _node(node), _root(root) {};
+			~iterator() {};
+			iterator	operator = (const iterator &x)
+			{
+				this->_node = x._node;
+				this->_root = x._root;
+				return (*this);
+			}
 
-            explicit bidirectional_iterators(bidirectional_iterators const & p)
+			// overload
+			bool operator == ( const iterator& x ) {
+				return (this->_node == x._node);
+			}
+			bool operator != ( const iterator& x ) {
+				return (this->_node != x._node);
+			}
+			reference operator * () {
+				return (this->_node->data);
+			}
+			pointer operator -> () {
+				return (&this->_node->data);
+			}
+			const_pointer operator -> () const {
+				return (&this->_node->data);
+			}
+			iterator& operator ++ () {
+				this->_node = _avl->incrementation(_node);
+				return (*this);
+			}
+			iterator operator ++ (int) {
+				
+				iterator _old = *this;
+				this->_node = _avl->incrementation(_node);
+				return _old;
+			}
+			iterator operator--()
             {
-                this->_node = p._node;
-            }
-
-            bidirectional_iterators    &operator=(bidirectional_iterators const & src)
-            {
-                this->_node = src._node;
-                return(*this);
-            }
-            ~bidirectional_iterators()
-            {
-
-            }
-
-            bool    operator==(bidirectional_iterators const & src)
-            {
-                if (this->_node == src._node)
-                    return true;
-                else
-                    return false;
-            }
-
-            bool    operator!=(bidirectional_iterators const & src)
-            {
-                 if (this->_node != src._node)
-                    return true;
-                else
-                    return false;
-            }
-
-            reference   operator*() const
-            {
-                return *(_node->data);
-            }
-
-            pointer operator->() const
-            {
-                return (_node->data);
-            }
-
-            bidirectional_iterators operator++()
-            {
-                this->_node = _avl->incrementation(_node);
-                return (*this);
-            }
-
-            bidirectional_iterators operator++(int)
-            {
-                bidirectional_iterators tmp = this;
-                this->_node = _avl->incrementation(_node);
-                return (*tmp);
-            }
-
-            bidirectional_iterators operator--()
-            {
-                this->_node = _avl->decrementation(_node);
-                return (*this);
-            }
-
-            bidirectional_iterators operator--(int)
-            {
-                bidirectional_iterators tmp = this;
+                iterator tmp = this;
                 this->_node = _avl->decrementation(_node);
                 return (*tmp);
             }
-
-    };
+			iterator operator-- (int) {
+				iterator _old = *this;
+				operator--();
+				return _old;
+			}
+	};
 };
 
 

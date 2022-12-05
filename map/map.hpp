@@ -20,13 +20,13 @@ namespace ft
             typedef ft::pair<const key_type, mapped_type>        value_type;
             typedef Compare                                  key_compare;
             typedef Allocator                                allocator_type;
-            typedef ft::avl<mapped_type, key_type, key_compare, allocator_type> tree;
+            typedef ft::Node<value_type>                         node;
+            typedef ft::avl<node, mapped_type, key_type, key_compare, allocator_type> tree;
             typedef typename allocator_type::reference       reference;
             typedef typename allocator_type::const_reference const_reference;
             typedef typename allocator_type::pointer         pointer;
             typedef typename allocator_type::const_pointer   const_pointer;
-            typedef Node<value_type>                         node;
-            typedef ft::bidirectional_iterators<value_type, tree, node> iterator;
+            typedef ft::iterator<value_type, node, tree> iterator;
             // typedef typename std::map<Key, T>::iterator     iterator;
             // typedef ft::bidirectional_iterators<const value_type, tree> const_iterator;
             typedef typename allocator_type::size_type       size_type;
@@ -81,7 +81,10 @@ namespace ft
 
             iterator end()
             {
-                return (iterator(_tree.max_node()));
+                // node* root = NULL;
+                iterator it(_tree.max_node(), _tree._root);
+                // return (it);
+                return (it);
             }
 
             // const_iterator end() const
@@ -106,17 +109,42 @@ namespace ft
         {
             value_type tmp = ft::make_pair(k,mapped_type());
             insert(tmp);
-            return (_tree.search(k)->data->second);
+            return (_tree.search(k)->data.second);
         }
 /*-----------------------------modifiers-----------------------------------------------------------------------------------------------*/
             ft::pair<iterator,bool> insert (const value_type& val)
             {
-                unsigned int old_size = _tree.size();
-                _tree.insert(val);
+                iterator it = find(val.first);
+                if (it != end())
+                    return ft::make_pair(it, false);
+                else
+                {
+                    _tree.insert(val);
+                    return (ft::make_pair(find(val.first), true));
+                }
+                // unsigned int old_size = _tree.size();
+                // _tree.insert(val);
                 // if (_tree.size() == old_size)
-                    // return(ft::make_pair(iterator(_tree.new_node_all), false));
-                // return(ft::make_pair(iterator(_tree.new_node_all), true));
-                return (ft::make_pair(iterator(), false));
+                //     return(ft::make_pair(iterator(), false));
+                // return(ft::make_pair(iterator(), true));
+                //return (ft::make_pair(iterator(), false));
+            }
+
+            iterator find(const key_type &k)
+            {
+                node* tmp = size() ? _tree._root : NULL;
+                while (tmp != NULL)
+                {
+                    if (_compare(k, tmp->data.first))
+                    {
+                        tmp = tmp->left;
+                    }
+                    else if (_compare(tmp->data.first, k))
+                        tmp = tmp->right;
+                    else
+                        return (iterator(tmp, _tree._root));
+                }
+                return (end());
             }
 
             iterator insert (iterator position, const value_type& val)

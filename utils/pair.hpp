@@ -70,12 +70,12 @@ namespace ft
         {
             public:
                 Node(){
-
+                  this = NULL;
                 };
+                Node(const pair &x): data(x), left(NULL), right(NULL), parent(NULL){};
                 ~Node(){
-
                 };
-                pair *data;
+                pair data;
                 Node<pair> *left;
                 Node<pair> *right;
                 Node<pair> *parent;

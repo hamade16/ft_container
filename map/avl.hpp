@@ -8,7 +8,7 @@
 
 namespace ft
 {
-    template<class T, class key, class Compare = std::less<key>, class Alloc = std::allocator<ft::pair<key,T> > >
+    template<class Node, class T, class key, class Compare = std::less<key>, class Alloc = std::allocator<ft::pair<key,T> > >
     class avl
     {
         public:
@@ -17,14 +17,14 @@ namespace ft
             typedef Alloc allocator_type;
             typedef Compare							key_compare;
             typedef ft::pair<key_type, mapped_type> value_type;
-            typedef Node<value_type> Node;
-            Node    *new_node_all;
+            typedef Node node_type;
+            node_type    *new_node_all;
+            node_type    *_root;
         private: 
             allocator_type _all;
             key_compare _compare;
-            Node    *_root;
             unsigned int											_size;
-            typename allocator_type::template rebind<Node>::other	_node_allocator;
+            typename Alloc::template rebind<node_type>::other	_node_allocator;
         public:
             avl(const key_compare& comp = key_compare(), const allocator_type& alloc = allocator_type()): _root(NULL), _compare(comp), _all(alloc), _size(0)
             {
@@ -34,12 +34,12 @@ namespace ft
             {
 
             }
-            Node *new_node(const value_type &x)
+            node_type *new_node(value_type x)
             {
                 //node* newNode(int key);
-                Node * node1 = _all.allocate(1);
+                node_type * node1 = _node_allocator.allocate(1);
+                _node_allocator.construct(node1, x);
                 new_node_all = node1;
-                _all.construct(node1, x);
                 node1->left = NULL;
                 node1->right = NULL;
                 node1->parent = NULL;
@@ -50,7 +50,7 @@ namespace ft
                 return(node1);
             }
 
-            size_t height(Node *node)
+            size_t height(node_type *node)
             {
                 if (node == NULL)
                     return 0;
@@ -58,12 +58,12 @@ namespace ft
                     return (node->height);
             }
 
-            value_type max(value_type a, value_type b)
+            size_t max(size_t a, size_t b)
             {
                 return (a > b ? a : b); 
             }
 
-            size_t  getbalance(Node *node)
+            size_t  getbalance(node_type *node)
             {
                 if (node == NULL)
                     return 0;
@@ -71,16 +71,16 @@ namespace ft
                     return (height(node->left) - height(node->right));
             }
 
-            Node*   lRrotate(Node* y)
+            node_type*   lRrotate(node_type* y)
             {
-                Node *tmp = y->left;
+                node_type *tmp = y->left;
                 tmp = rightrotate(tmp);
                 return leftrotate(y);
             }
 
-            Node*   leftrotate(Node* y)
+            node_type*   leftrotate(node_type* y)
             {
-                Node *tmp = y->left;
+                node_type *tmp = y->left;
                 y->left = tmp->right; 
                 tmp->right = y;
                 tmp->parent = y->parent;
@@ -88,9 +88,9 @@ namespace ft
                 return tmp;
             }
 
-            Node* rightrotate(Node* y)
+            node_type* rightrotate(node_type* y)
             {
-               Node* tmp = y->right;
+               node_type* tmp = y->right;
                y->right = tmp->left;
                tmp->left = y;
                tmp->parent = y->parent;
@@ -98,9 +98,9 @@ namespace ft
                return (tmp);
             }
 
-            Node* RLrotate(Node* y)
+            node_type* RLrotate(node_type* y)
             {
-                Node *tmp = y->right;
+                node_type *tmp = y->right;
                 tmp = leftrotate(tmp);
                 return (rightrotate(y));
             }
@@ -115,32 +115,32 @@ namespace ft
                 return (_size);
             }
 
-            Node *min_node()
+            node_type *min_node()
             {
-                Node *current = this->_root;
+                node_type *current = this->_root;
 			    while (current->left != NULL)
 				    current = current->left;
 			    return current;
             }
 
-            Node *max_node()
+            node_type *max_node()
             {
-                Node *current = this->_root;
-			    while (current->right != NULL)
+                node_type *current = this->_root;
+			    while (current != NULL)
 				    current = current->right;
 			    return current;
             }
 
-            Node* insert(Node* node, value_type x)
+            node_type* insert(node_type* node, value_type x)
             {
                 new_node_all = NULL;
                 if (node == NULL)
                 {
                   return (new_node(x));
                 }
-                if (x.first < node->data->first)
+                if (x.first < node->data.first)
                     node->left = insert(node->left, x);
-                else if (x.first > node->data->first)
+                else if (x.first > node->data.first)
                     node->right = insert(node->right, x);
                 else 
                     return (node);
@@ -149,7 +149,7 @@ namespace ft
                 if (node->balance_factor < -1)
                 {
                     if (node->right->balance_factor <= 0)
-                        return (Rightrotate(node));
+                        return (rightrotate(node));
                     else
                         return (RLrotate(node));
                 }
@@ -171,7 +171,7 @@ namespace ft
                 std::swap(this->_root, other._root);
             }
 
-            void clear(Node *node)
+            void clear(node_type *node)
 		    {
 		    	if (node == NULL)
 		    		return;
@@ -187,7 +187,7 @@ namespace ft
                 _root = NULL;
             }
 
-            Node *incrementation(Node *node) const
+            node_type *incrementation(node_type *node) const
 			{
 				if (node == max_node() || node == NULL)
 				{
@@ -197,7 +197,7 @@ namespace ft
 			}
 
 
-            const Node *incrementation(const Node *node) const
+            const node_type *incrementation(const node_type *node) const
 			{
 				if (node == max_node() || node == NULL)
 				{
@@ -207,9 +207,9 @@ namespace ft
 			}
 
 
-            Node* incrementation(Node *root, key_type k) const
+            node_type* incrementation(node_type *root, key_type k) const
 			{
-				Node *succ = NULL;
+				node_type *succ = NULL;
 				while (true)
 				{
 					if (_compare(k, root->data.first))
@@ -231,23 +231,23 @@ namespace ft
 				return succ;
 			}
 
-            Node *decrementation(Node *node) const
+            node_type *decrementation(node_type *node) const
 			{
 				if (node == max_node())
 					return max_value_node(this->_root);
 				return decrementation(_root, node->data.first);
 			}
 
-            const Node *decrementation(const Node *node) const
+            const node_type *decrementation(const node_type *node) const
 			{
 				if (node == max_node())
 					return max_value_node(this->_root);
 				return decrementation(_root, node->data.first);
 			}
 
-            Node* decrementation(Node *rt, key_type k) const
+            node_type* decrementation(node_type *rt, key_type k) const
 		    {
-		    	Node* pred = NULL;
+		    	node_type* pred = NULL;
 		    	while (true)
 		    	{
 		    		if (_compare(k, rt->data.first))
@@ -269,23 +269,23 @@ namespace ft
 		    	return pred;
 		    }
 
-            Node*   search(key_type k) const
+            node_type*   search(key_type k) const
             {
                 return search(_root, k);
             }
 
-            Node* search(Node *root, key_type k) const
+            node_type* search(node_type *root, key_type k) const
             {
                 if (root == NULL)
                         return NULL;
-                else if (_compare(k, root->data->first))
+                else if (_compare(k, root->data.first))
                 {
-                        Node* rt = search(root->left, k);
+                        node_type* rt = search(root->left, k);
                         return rt;
                 }
-                else if (_compare(root->data->first, k))
+                else if (_compare(root->data.first, k))
                 {
-                        Node* rt = search(root->right, k);
+                        node_type* rt = search(root->right, k);
                         return rt;
                 }
                 else
