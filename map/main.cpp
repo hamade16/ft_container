@@ -7,14 +7,24 @@ int main()
     // p.insert(std::make_pair("h", "hshhs"));
     // std::map<char*, char*>::iterator  it = p.begin();
     // std::cout << *it->first << std::endl;
-   ft::map<char,int> mymap;
+   ft::map<char,std::string> mymap;
 
-  mymap['b'] = 100;
-  mymap['a'] = 200;
-  mymap['c'] = 300;
+  mymap['a'];
+  mymap['b']; 
+  mymap['c']; 
+// std::cout << mymap.size() << std::endl;
 
-  // show content:
-  for (ft::map<char,int>::iterator it=mymap.begin(); it!=mymap.end(); ++it)
-    std::cout << it->first << " => " << it->second << '\n';
+//   ft::map<char , std::string>::iterator it;
+//   for (it = mymap.begin(); it != mymap.end(); it++)
+//   {
+//     std::cout << "key = " << it->first << " value = " << it->second << std::endl;
+//   }
+  // std::cout << "mymap['a'] is " << mymap['a'] << '\n';
+  // std::cout << "mymap['b'] is " << mymap['b'] << '\n';
+  // std::cout << "mymap['c'] is " << mymap['c'] << '\n';
+  // std::cout << "mymap['d'] is " << mymap['d'] << '\n';
+
+  // std::cout << "mymap now contains " << mymap.size() << " elements.\n";
+
     return 0;
 }

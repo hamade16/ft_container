@@ -83,7 +83,7 @@ namespace ft
             iterator end()
             {
                 // node* root = NULL;
-                iterator it(_tree.max_node(_tree._root), _tree._root);
+                iterator it;
                 // return (it);
                 return (it);
             }
@@ -108,9 +108,14 @@ namespace ft
         /*------------------------------------------------element acces----------------------------------------------------------------*/
         mapped_type& operator[] (const key_type& k)
         {
-            value_type tmp = ft::make_pair(k,mapped_type());
-            insert(tmp);
-            return (_tree.search(k)->data.second);
+            iterator it = find(k);
+            if (it != end())
+                return it->second;
+            insert(ft::make_pair(k, mapped_type()));
+            return (find(k)->second);
+            // value_type tmp = ft::make_pair(k,mapped_type());
+            // insert(tmp);
+            // return (_tree.search(k)->data.second);
         }
 /*-----------------------------modifiers-----------------------------------------------------------------------------------------------*/
             ft::pair<iterator,bool> insert (const value_type& val)
@@ -121,6 +126,7 @@ namespace ft
                 else
                 {
                     _tree.insert(val);
+                    //std::cout << _tree._root->data.first << std::endl;
                     return (ft::make_pair(find(val.first), true));
                 }
                 // unsigned int old_size = _tree.size();

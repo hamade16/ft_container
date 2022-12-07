@@ -71,38 +71,26 @@ namespace ft
                     return (height(node->left) - height(node->right));
             }
 
-            node_type*   lRrotate(node_type* y)
+             Node *right_rotate(Node *y)
             {
-                node_type *tmp = y->left;
-                tmp = rightrotate(tmp);
-                return leftrotate(y);
+                 Node *x = y->left;
+                 Node *T2 = x->right;
+                 x->right = y;
+                 y->left = T2;
+                 y->height = max(height(y->left), height(y->right)) + 1;
+                 x->height = max(height(x->left), height(x->right)) + 1;
+                 return x;
             }
 
-            node_type*   leftrotate(node_type* y)
+            Node *left_rotate(Node *x)
             {
-                node_type *tmp = y->left;
-                y->left = tmp->right; 
-                tmp->right = y;
-                tmp->parent = y->parent;
-                y->parent = tmp;
-                return tmp;
-            }
-
-            node_type* rightrotate(node_type* y)
-            {
-               node_type* tmp = y->right;
-               y->right = tmp->left;
-               tmp->left = y;
-               tmp->parent = y->parent;
-               y->parent = tmp;
-               return (tmp);
-            }
-
-            node_type* RLrotate(node_type* y)
-            {
-                node_type *tmp = y->right;
-                tmp = leftrotate(tmp);
-                return (rightrotate(y));
+                 Node *y = x->right;
+                 Node *T2 = y->left;
+                 y->left = x;
+                 x->right = T2;
+                 x->height = max(height(x->left), height(x->right)) + 1;
+                 y->height = max(height(y->left), height(y->right)) + 1;
+                 return y;
             }
 
             void	insert(const value_type &data)
@@ -118,17 +106,25 @@ namespace ft
             node_type *min_node(node_type *root)
             {
                 node_type *current = root;
+                node_type *tmp = current;
 			    while (current != NULL)
+                {
+                    tmp = current;
 				    current = current->left;
-			    return current->parent;
+                }
+			    return tmp;
             }
 
             node_type *max_node(node_type *root)
             {
                 node_type *current = root;
+                node_type *tmp = current;
 			    while (current != NULL)
+                {
+                    tmp = current;
 				    current = current->right;
-			    return current;
+                }
+			    return tmp;
             }
 
             node_type* insert(node_type* node, value_type x)
@@ -146,20 +142,48 @@ namespace ft
                     return (node);
                 node->height = 1 + max(height(node->left), height(node->right));
                 node->balance_factor = getbalance(node);
-                if (node->balance_factor < -1)
+                if (node->balance_factor > 1 && _compare(node->data.first, node->left->data.first))
                 {
-                    if (node->right->balance_factor <= 0)
-                        return (rightrotate(node));
-                    else
-                        return (RLrotate(node));
+                    return right_rotate(node);
                 }
-                else if(node->balance_factor > 1)
+                else if (node->balance_factor < -1 && _compare(node->right->data.first, node->data.first))
                 {
-                    if (node->left->balance_factor >= 0)
-                        return (leftrotate(node));
-                    else
-                        return (lRrotate(node));
+                    return left_rotate(node);
                 }
+                else if (node->balance_factor > 1 && _compare(node->left->data.first, node->data.first))
+                {
+                    node->left = left_rotate(node->left);
+                    return right_rotate(node);
+                }
+                else if (node->balance_factor < -1 && _compare(node->data.first, node->right->data.first))
+                {
+                    node->right = right_rotate(node->right);
+                    return left_rotate(node);
+                }
+                // if (node->balance_factor < -1) // left right
+                // {
+                //     if (x.first < node->data.first)
+                //         return (leftrotate(node));
+                //     else if (x.first > node->right->data.first)
+                //     {
+                //         node->right = leftrotate(node->right);
+                //         return (rightrotate(node));
+                //     }
+                //     // if (node->right->balance_factor <= 0)
+                //     //     return (rightrotate(node));
+                //     // else
+                //     //     return (RLrotate(node));
+                // }
+                // if(node->balance_factor > 1)
+                // {
+                //    if (x.first > node->data.first)
+                //         return (rightrotate(node));
+                //     else if (x.first < node->left->data.first)
+                //     {
+                //         node->left = rightrotate(node->left);
+                //         return (leftrotate(node));
+                //     }
+                // }
                 return (node);
             }
 
@@ -187,23 +211,23 @@ namespace ft
                 _root = NULL;
             }
 
-            node_type *incrementation(node_type *node)
+            node_type *incrementation(node_type *root,  node_type *node)
 			{
 				if (node == max_node(this->_root) || node == NULL)
 				{
 					return NULL;
 				}
-				return (incrementation(_root, node->data.first));
+				return (incrementation(root, node->data.first));
 			}
 
 
-            const node_type *incrementation(const node_type *node) const
+            const node_type *incrementation(node_type *root, const node_type *node) const
 			{
 				if (node == max_node(this->_root) || node == NULL)
 				{
 					return NULL;
 				}
-				return (incrementation(_root, node->data.first));
+				return (incrementation(root, node->data.first));
 			}
 
 
@@ -227,7 +251,9 @@ namespace ft
 					}
 				}
 				if (succ == NULL)
+                {
 					return max_node(this->_root);
+                }
 				return succ;
 			}
 
