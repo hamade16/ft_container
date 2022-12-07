@@ -34,6 +34,7 @@ namespace ft
             {
 
             }
+
             node_type *new_node(value_type x)
             {
                 //node* newNode(int key);
@@ -42,7 +43,7 @@ namespace ft
                 new_node_all = node1;
                 node1->left = NULL;
                 node1->right = NULL;
-                node1->parent = NULL;
+               // node1->parent = NULL;
                 node1->height = 1; // new node is initially
                                   // added at leaf
                 node1->balance_factor = 0;
@@ -71,10 +72,11 @@ namespace ft
                     return (height(node->left) - height(node->right));
             }
 
-             Node *right_rotate(Node *y)
+            node_type *right_rotate(node_type *y)
             {
-                 Node *x = y->left;
-                 Node *T2 = x->right;
+                 node_type *x = y->left;
+                 std::cout << "in avl" << std::endl;
+                 node_type *T2 = x->right;
                  x->right = y;
                  y->left = T2;
                  y->height = max(height(y->left), height(y->right)) + 1;
@@ -82,7 +84,7 @@ namespace ft
                  return x;
             }
 
-            Node *left_rotate(Node *x)
+            node_type *left_rotate(node_type *x)
             {
                  Node *y = x->right;
                  Node *T2 = y->left;
