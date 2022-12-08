@@ -72,13 +72,24 @@ namespace ft
                 Node(){
                   this = NULL;
                 };
-                Node(const pair &x): data(x), left(NULL), right(NULL), parent(NULL){};
+                Node(const pair &x): data(x), left(NULL), right(NULL){};
+                Node(Node &x)
+                {
+                  this = x;
+                }
+                Node  operator=(Node & x)
+                {
+                  this->data = x.data;
+                  this->left = x.left;
+                  this->right = x.right;
+                  return *this;
+                }
                 ~Node(){
                 };
                 pair data;
                 Node<pair> *left;
                 Node<pair> *right;
-                Node<pair> *parent;
+               // Node<pair> *parent;
                 size_t height;
                 int  balance_factor;
         };

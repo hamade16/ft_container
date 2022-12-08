@@ -74,25 +74,24 @@ namespace ft
 
             node_type *right_rotate(node_type *y)
             {
-                 node_type *x = y->left;
-                 std::cout << "in avl" << std::endl;
-                 node_type *T2 = x->right;
-                 x->right = y;
-                 y->left = T2;
-                 y->height = max(height(y->left), height(y->right)) + 1;
-                 x->height = max(height(x->left), height(x->right)) + 1;
-                 return x;
+                node_type *x = y->left;
+                node_type *T2 = x->right;
+                x->right = y;
+                y->left = T2;
+                y->height = max(height(y->left), height(y->right)) + 1;
+                x->height = max(height(x->left), height(x->right)) + 1;
+                return x;
             }
 
             node_type *left_rotate(node_type *x)
             {
-                 Node *y = x->right;
-                 Node *T2 = y->left;
-                 y->left = x;
-                 x->right = T2;
-                 x->height = max(height(x->left), height(x->right)) + 1;
-                 y->height = max(height(y->left), height(y->right)) + 1;
-                 return y;
+                node_type *y = x->right;
+                node_type *T2 = y->left;
+                y->left = x;
+                x->right = T2;
+                x->height = max(height(x->left), height(x->right)) + 1;
+                y->height = max(height(y->left), height(y->right)) + 1;
+                return y;
             }
 
             void	insert(const value_type &data)
@@ -144,23 +143,45 @@ namespace ft
                     return (node);
                 node->height = 1 + max(height(node->left), height(node->right));
                 node->balance_factor = getbalance(node);
-                if (node->balance_factor > 1 && _compare(node->data.first, node->left->data.first))
+                // if (node->balance_factor > 1 && _compare(node->left->data.first, node->data.first))
+                // {
+                //    return right_rotate(node);
+                // }
+                // else if (node->balance_factor < -1 && _compare(node->data.first, node->right->data.first))
+                // {
+                //     return left_rotate(node);
+                // }
+                // else if (node->balance_factor > 1 && _compare(node->data.first, node->left->data.first)) 
+                // {
+                //     node->left = left_rotate(node->left);
+                //     return right_rotate(node);
+                // }
+                // else if (node->balance_factor < -1 && _compare(node->right->left->data.first, node->right->data.first))
+                // {
+                //     std::cout << "heloooooooooo" << std::endl;
+                //     node->right = right_rotate(node->right);
+                //     return left_rotate(node);
+                // }
+                if (node->balance_factor < -1)
                 {
-                    return right_rotate(node);
+                    if (node->right->balance_factor <= 0)
+                        return left_rotate(node);
+                    else 
+                    {
+                        std::cout << "heloooooooooo" << std::endl;
+                         node->right = right_rotate(node->right);
+                        return left_rotate(node);
+                    }
                 }
-                else if (node->balance_factor < -1 && _compare(node->right->data.first, node->data.first))
+                else if(node->balance_factor > 1)
                 {
-                    return left_rotate(node);
-                }
-                else if (node->balance_factor > 1 && _compare(node->left->data.first, node->data.first))
-                {
-                    node->left = left_rotate(node->left);
-                    return right_rotate(node);
-                }
-                else if (node->balance_factor < -1 && _compare(node->data.first, node->right->data.first))
-                {
-                    node->right = right_rotate(node->right);
-                    return left_rotate(node);
+                    if (node->right->balance_factor >= 0)
+                        return right_rotate(node);
+                    else
+                    {
+                        node->left = left_rotate(node->left);
+                        return right_rotate(node);
+                    }
                 }
                 // if (node->balance_factor < -1) // left right
                 // {
