@@ -7,6 +7,7 @@
 #include "avl.hpp"
 # include "../utils/pair.hpp"
 # include "./bidirectional_iterators.hpp"
+# include "../vector/vector.hpp"
 
 namespace ft
 {
@@ -151,6 +152,38 @@ namespace ft
                 _tree.swap(x._tree);
             }
 
+            size_type erase (const key_type& k)
+            {
+                if (_tree.search(k))
+                {
+                    _tree.delete_node(k);
+                    _tree._size--;
+                    return (1);
+                }
+                return (0);
+            }
+
+            void erase (iterator position)
+            {
+                value_type a = *(position);
+                _tree.delete_node(a.first);
+            }
+
+            void erase (iterator first, iterator last)
+            {
+                ft::vector<key_type> vect;
+                while (first != last)
+                {
+                    vect.push_back(first->first);
+                    first++;
+                }
+                typename ft::vector<key_type>::iterator it = vect.begin();
+                while (it != vect.end())
+                {
+                    erase(*it);
+                    it++;
+                }
+            }
 /*----------------------------------------------Operations-----------------------------------------------------------*/
             iterator find(const key_type &k)
             {

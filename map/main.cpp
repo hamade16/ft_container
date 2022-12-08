@@ -3,8 +3,8 @@
 
 int main()
 {
-     std::map<char,int> mymap;
-  std::map<char,int>::iterator it;
+     ft::map<char,int> mymap;
+  ft::map<char,int>::iterator it;
 
   // insert some values:
   mymap['a']=10;
@@ -17,7 +17,7 @@ int main()
   it=mymap.find('b');
   mymap.erase (it);                   // erasing by iterator
 
-  // mymap.erase ('c');                  // erasing by key
+  mymap.erase ('c');                  // erasing by key
 
   it=mymap.find ('e');
   mymap.erase ( it, mymap.end() );    // erasing by range

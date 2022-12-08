@@ -20,10 +20,10 @@ namespace ft
             typedef Node node_type;
             node_type    *new_node_all;
             node_type    *_root;
+            unsigned int											_size;
         private: 
             allocator_type _all;
             key_compare _compare;
-            unsigned int											_size;
             typename Alloc::template rebind<node_type>::other	_node_allocator;
         public:
             avl(const key_compare& comp = key_compare(), const allocator_type& alloc = allocator_type()): _root(NULL), _compare(comp), _all(alloc), _size(0)
@@ -168,6 +168,69 @@ namespace ft
                 return (node);
             }
 
+            void    delete_node(key_type k)
+            {
+                _root = delete_node(_root, k);
+            }
+
+            Node *delete_node(node_type *root, key_type k)
+            {
+                if (root == NULL)
+                    return root;
+                if (_compare(k, root->data.first))
+                        root->left = delete_node(root->left, k);
+                else if (_compare(root->data.first, k))
+                {
+                        root->right = delete_node(root->right, k);
+                }
+                else
+                {
+                    if (root->left == NULL && root->right==NULL)
+                    {
+                            _node_allocator.destroy(root);
+                            _node_allocator.deallocate(root, 1);
+                            return NULL;
+                    }
+                    else if (root->left == NULL)
+                    {
+                        node_type* temp = root->right;
+                        _node_allocator.destroy(root);
+                        _node_allocator.deallocate(root, 1);
+                        return temp;
+                    }
+                    else if (root->right == NULL)
+                    {
+                        node_type* temp = root->left;
+                        _node_allocator.destroy(root);
+                        _node_allocator.deallocate(root, 1);
+                        return temp;
+                    }
+                    node_type* temp = min_node(root->right);
+                    _all.destroy(&root->data);
+                    _all.construct(&root->data, temp->data);
+                    root->right = delete_node(root->right, temp->data.first);
+                }
+                if (root == NULL)
+                    return root;
+                root->height = 1 + max(height(root->left), height(root->right));
+                root->balance_factor = getbalance(root);
+                 if (root->balance_factor > 1 && root->left->balance_factor >= 0)
+                         return right_rotate(root);
+                if (root->balance_factor > 1 && root->left->balance_factor < 0)
+                {
+                        root->left = left_rotate(root->left);
+                        return right_rotate(root);
+                }
+                if (root->balance_factor < -1 && root->right->balance_factor <= 0)
+                        return left_rotate(root);
+                if (root->balance_factor < -1 && root->right->balance_factor > 0)
+                {
+                        root->right = right_rotate(root->right);
+                        return left_rotate(root);
+                }
+                return root;
+            }
+
             void    swap(avl &other)
             {
                 std::swap(this->_all, other._all);
@@ -190,11 +253,6 @@ namespace ft
             {
                 clear(this->_root);
                 _root = NULL;
-            }
-
-            void erase (iterator position)
-            {
-                
             }
 
             node_type *incrementation(node_type *root,  node_type *node)
