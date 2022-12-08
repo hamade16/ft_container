@@ -27,8 +27,7 @@ namespace ft
             typedef typename allocator_type::pointer         pointer;
             typedef typename allocator_type::const_pointer   const_pointer;
             typedef ft::iterator<value_type, node, tree> iterator;
-            // typedef typename std::map<Key, T>::iterator     iterator;
-            // typedef ft::bidirectional_iterators<const value_type, tree> const_iterator;
+            typedef ft::iterator<const value_type, node, tree> const_iterator;
             typedef typename allocator_type::size_type       size_type;
             typedef typename allocator_type::difference_type difference_type;
 
@@ -75,23 +74,22 @@ namespace ft
                 return(it);
             }
 
-            // const_iterator begin() const
-            // {
-            //     return(iterator(_tree.min_node()));
-            // }
+            const_iterator begin() const
+            {
+                const_iterator it(_tree.min_node(_tree._root), _tree._root);
+            }
 
             iterator end()
             {
-                // node* root = NULL;
                 iterator it;
-                // return (it);
                 return (it);
             }
 
-            // const_iterator end() const
-            // {
-            //     return (iterator(_tree.max_node()));
-            // }
+            const_iterator end() const
+            {
+                const_iterator it;
+                return (it);
+            }
 
 /*------------------------------------------------capacity----------------------------------------------*/
 
@@ -105,6 +103,8 @@ namespace ft
             return !(_tree.size);
         }
 
+
+
         /*------------------------------------------------element acces----------------------------------------------------------------*/
         mapped_type& operator[] (const key_type& k)
         {
@@ -113,9 +113,6 @@ namespace ft
                 return it->second;
             insert(ft::make_pair(k, mapped_type()));
             return (find(k)->second);
-            // value_type tmp = ft::make_pair(k,mapped_type());
-            // insert(tmp);
-            // return (_tree.search(k)->data.second);
         }
 /*-----------------------------modifiers-----------------------------------------------------------------------------------------------*/
             ft::pair<iterator,bool> insert (const value_type& val)
@@ -126,17 +123,35 @@ namespace ft
                 else
                 {
                     _tree.insert(val);
-                    //std::cout << _tree._root->data.first << std::endl;
                     return (ft::make_pair(find(val.first), true));
                 }
-                // unsigned int old_size = _tree.size();
-                // _tree.insert(val);
-                // if (_tree.size() == old_size)
-                //     return(ft::make_pair(iterator(), false));
-                // return(ft::make_pair(iterator(), true));
-                //return (ft::make_pair(iterator(), false));
             }
 
+            iterator insert (iterator position, const value_type& val)
+            {
+                insert(val);
+                return position;
+            }
+            template <class InputIterator>
+            void insert (InputIterator first, InputIterator last)
+            {
+                while (first != last)
+                {
+                    this->insert(*first);
+                    first++;
+                }
+            }
+            void clear()
+            {
+                _tree.clear();
+            }
+
+            void swap (map& x)
+            {
+                _tree.swap(x._tree);
+            }
+
+/*----------------------------------------------Operations-----------------------------------------------------------*/
             iterator find(const key_type &k)
             {
                 node* tmp = size() ? _tree._root : NULL;
@@ -153,24 +168,6 @@ namespace ft
                 }
                 return (end());
             }
-
-            iterator insert (iterator position, const value_type& val)
-            {
-                insert(val);
-                return position;
-            }
-            // template <class InputIterator>
-            // void insert (InputIterator first, InputIterator last)
-            // {
-            //     while (first != last)
-            //     {
-            //         this->insert(*first);
-            //         first++;
-            //     }
-            // }
-
-
-
     };
 };
 #endif

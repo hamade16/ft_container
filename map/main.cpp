@@ -3,22 +3,29 @@
 
 int main()
 {
-    // std::map<char*, char*> p;
-    // p.insert(std::make_pair("h", "hshhs"));
-    // std::map<char*, char*>::iterator  it = p.begin();
-    // std::cout << *it->first << std::endl;
-   ft::map<char,std::string> mymap;
+     std::map<char,int> mymap;
+  std::map<char,int>::iterator it;
 
-  mymap['a']="an element";
-  mymap['b']="another element";
-  mymap['c']=mymap['b'];
+  // insert some values:
+  mymap['a']=10;
+  mymap['b']=20;
+  mymap['c']=30;
+  mymap['d']=40;
+  mymap['e']=50;
+  mymap['f']=60;
 
-  std::cout << "mymap['a'] is " << mymap['a'] << '\n';
-  std::cout << "mymap['b'] is " << mymap['b'] << '\n';
-  std::cout << "mymap['c'] is " << mymap['c'] << '\n';
-  std::cout << "mymap['d'] is " << mymap['d'] << '\n';
+  it=mymap.find('b');
+  mymap.erase (it);                   // erasing by iterator
 
-  std::cout << "mymap now contains " << mymap.size() << " elements.\n";
+  // mymap.erase ('c');                  // erasing by key
+
+  it=mymap.find ('e');
+  mymap.erase ( it, mymap.end() );    // erasing by range
+
+  // show content:
+  for (it=mymap.begin(); it!=mymap.end(); ++it)
+    std::cout << it->first << " => " << it->second << '\n';
+
 
   return 0;
 }

@@ -143,70 +143,28 @@ namespace ft
                     return (node);
                 node->height = 1 + max(height(node->left), height(node->right));
                 node->balance_factor = getbalance(node);
-                // if (node->balance_factor > 1 && _compare(node->left->data.first, node->data.first))
-                // {
-                //    return right_rotate(node);
-                // }
-                // else if (node->balance_factor < -1 && _compare(node->data.first, node->right->data.first))
-                // {
-                //     return left_rotate(node);
-                // }
-                // else if (node->balance_factor > 1 && _compare(node->data.first, node->left->data.first)) 
-                // {
-                //     node->left = left_rotate(node->left);
-                //     return right_rotate(node);
-                // }
-                // else if (node->balance_factor < -1 && _compare(node->right->left->data.first, node->right->data.first))
-                // {
-                //     std::cout << "heloooooooooo" << std::endl;
-                //     node->right = right_rotate(node->right);
-                //     return left_rotate(node);
-                // }
                 if (node->balance_factor < -1)
                 {
                     if (node->right->balance_factor <= 0)
                         return left_rotate(node);
                     else 
                     {
-                        std::cout << "heloooooooooo" << std::endl;
                          node->right = right_rotate(node->right);
                         return left_rotate(node);
                     }
                 }
                 else if(node->balance_factor > 1)
                 {
-                    if (node->right->balance_factor >= 0)
+                    if (node->left->balance_factor >= 0)
+                    {
                         return right_rotate(node);
+                    }
                     else
                     {
                         node->left = left_rotate(node->left);
                         return right_rotate(node);
                     }
                 }
-                // if (node->balance_factor < -1) // left right
-                // {
-                //     if (x.first < node->data.first)
-                //         return (leftrotate(node));
-                //     else if (x.first > node->right->data.first)
-                //     {
-                //         node->right = leftrotate(node->right);
-                //         return (rightrotate(node));
-                //     }
-                //     // if (node->right->balance_factor <= 0)
-                //     //     return (rightrotate(node));
-                //     // else
-                //     //     return (RLrotate(node));
-                // }
-                // if(node->balance_factor > 1)
-                // {
-                //    if (x.first > node->data.first)
-                //         return (rightrotate(node));
-                //     else if (x.first < node->left->data.first)
-                //     {
-                //         node->left = rightrotate(node->left);
-                //         return (leftrotate(node));
-                //     }
-                // }
                 return (node);
             }
 
@@ -232,6 +190,11 @@ namespace ft
             {
                 clear(this->_root);
                 _root = NULL;
+            }
+
+            void erase (iterator position)
+            {
+                
             }
 
             node_type *incrementation(node_type *root,  node_type *node)
