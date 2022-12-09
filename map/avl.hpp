@@ -344,6 +344,11 @@ namespace ft
                 return search(_root, k);
             }
 
+            // node_type*   search(const key_type k) const
+            // {
+            //     return search(_root, k);
+            // }
+
             node_type* search(node_type *root, key_type k) const
             {
                 if (root == NULL)
@@ -360,6 +365,47 @@ namespace ft
                 }
                 else
                         return root;
+            }
+
+            node_type* lower_bound (const key_type& k)
+            {
+                return lower_bound(_root, k);
+            }
+
+            node_type*  lower_bound(node_type *root, const key_type& k)
+            {
+                node_type* tmp = min_node(root);
+                while (_compare(tmp->data.first, k))
+                {
+                    tmp = incrementation(root, tmp);
+                }
+                if (tmp == NULL)
+                    return NULL;
+                else
+                    return(tmp);
+            }
+
+            node_type*  upper_bound (const key_type& k)
+            {
+                return upper_bound(_root, k);
+            }
+
+            node_type*  upper_bound (node_type *root, const key_type& k)
+            {
+                node_type* tmp = min_node(root);
+                while (_compare(tmp->data.first, k))
+                {
+                    tmp = incrementation(root, tmp);
+                }
+                if (tmp == NULL)
+                    return NULL;
+                else if (k == tmp->data.first)
+                {
+                    tmp = incrementation(root, tmp);
+                    return (tmp);
+                }
+                else
+                   return(tmp);
             }
     };
 }

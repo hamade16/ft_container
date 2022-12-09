@@ -201,6 +201,56 @@ namespace ft
                 }
                 return (end());
             }
+
+            size_type count (const key_type& k) const
+            {
+                node *tmp = _tree.search(k);
+                if (tmp == NULL)
+                    return (0);
+                return 1;
+            }
+
+            iterator lower_bound (const key_type& k)
+            {
+                return (iterator(_tree.lower_bound(k), _tree._root));
+            }
+
+            const_iterator lower_bound (const key_type& k) const
+            {
+                return (const_iterator(_tree.lower_bound(k), _tree._root));
+            }
+
+            iterator upper_bound (const key_type& k)
+            {
+                return (iterator(_tree.upper_bound(k), _tree._root));
+            }
+            const_iterator upper_bound (const key_type& k) const
+            {
+                return (const_iterator(_tree.upper_bound(k), _tree._root));
+            }
+
+            pair<const_iterator,const_iterator> equal_range (const key_type& k) const
+            {
+                pair<const_iterator, const_iterator> p = make_pair(lower_bound(k), upper_bound(k));
+                return(p);
+            }
+
+            pair<iterator,iterator> equal_range (const key_type& k) const
+            {
+                pair<iterator, iterator> p = make_pair(lower_bound(k), upper_bound(k));
+                return(p);
+            }
+
+/*---------------------------------------Observers:------------------------------------------------------*/
+            key_compare key_comp() const
+            {
+                return (_compare);
+            }
+
+            value_compare value_comp() const
+            {
+                return (value_comp(_compare));
+            }
     };
 };
 #endif

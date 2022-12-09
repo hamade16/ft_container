@@ -89,7 +89,6 @@ namespace ft
                 pair data;
                 Node<pair> *left;
                 Node<pair> *right;
-               // Node<pair> *parent;
                 size_t height;
                 int  balance_factor;
         };
