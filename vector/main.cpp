@@ -1,13 +1,21 @@
 #include <iostream>
 #include "vector.hpp"
 #include "random_access_iterator.hpp"
-#include "reverse_iterator.hpp"
+#include "../utils/reverse_iterator.hpp"
 #include <memory>
 #include <vector>
 
 using namespace std;
 int main()
 {
+  ft::vector<char,int> v;
+  v.assign (7,100);
+
+
+  // show content:
+  ft::vector<int>::iterator rit;
+  rit = v.begin();
+  std::cout << *rit << std::endl;
   // ft::vector<int> first;
   // ft::vector<int> second;
   // ft::vector<int> third;
@@ -31,33 +39,33 @@ int main()
   //             << "] --------------------]\t\t\033[0m";
     {
         /*------------------ std::vectors ---------------------*/
-        std::vector<std::string> v1(40, "less");
-        std::vector<std::string> v2;
-        std::vector<std::string> v3(10, "string2");
+        // std::vector<std::string> v1(40, "less");
+        // std::vector<std::string> v2;
+        // std::vector<std::string> v3(10, "string2");
         /*------------------ std::vectors ---------------------*/
-        ft::vector<std::string> ft_v1(40, "less");
-        ft::vector<std::string> ft_v2;
-        ft::vector<std::string> ft_v3(10, "string2");
+        // ft::vector<std::string> ft_v1(40, "less");
+        // ft::vector<std::string> ft_v2;
+        // ft::vector<std::string> ft_v3(10, "string2");
         /*
          * Strings to store the results
          */
-        std::string s1, s2, s3, ft_s1, ft_s2, ft_s3;
+        //std::string s1, s2, s3, ft_s1, ft_s2, ft_s3;
         /*
          * Var to store the size and the capacity
          */
-        size_t z1, z2, z3, ft_z1, ft_z2, ft_z3;
-        size_t c1, c2, c3, ft_c1, ft_c2, ft_c3;
+        // size_t z1, z2, z3, ft_z1, ft_z2, ft_z3;
+        // size_t c1, c2, c3, ft_c1, ft_c2, ft_c3;
         // test for n greater than the vector capactiy
-        v3.assign(v1.begin(), v1.end());
-        ft_v3.assign(v1.begin(), v1.end());
+        // v3.assign(v1.begin(), v1.end());
+        // ft_v3.assign(v1.begin(), v1.end());
 
-        z1 = v3.size();
-        c1 = v3.capacity();
-        ft_z1 = ft_v3.size();
-        ft_c1 = ft_v3.capacity();
+        // z1 = v3.size();
+        // c1 = v3.capacity();
+        // ft_z1 = ft_v3.size();
+        // ft_c1 = ft_v3.capacity();
 
-        std::cout << "dyalna => "  << ft_c1 << " " << ft_z1 << "\n";
-        std::cout << "dyalhom => " << c1 << " " << z1 << "\n";
+        // std::cout << "dyalna => "  << ft_c1 << " " << ft_z1 << "\n";
+        // std::cout << "dyalhom => " << c1 << " " << z1 << "\n";
         // for (size_t i = 0; i < v3.size(); ++i)
         //     s1 += v3.at(i);
 

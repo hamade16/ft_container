@@ -6,7 +6,7 @@
 # include <vector>
 
 #include "random_access_iterator.hpp"
-#include "reverse_iterator.hpp"
+#include "../utils/reverse_iterator.hpp"
 #include "enable_if.hpp"
 #include "is_integral.hpp"
 
@@ -26,7 +26,7 @@ namespace ft
             typedef ft::random_access_iterator<const value_type>    const_iterator;
             typedef std::size_t                              size_type;
             typedef ft::reverse_iterator<iterator>          reverse_iterator;
-        typedef ft::reverse_iterator<const_iterator>    const_reverse_iterator; 
+            typedef ft::reverse_iterator<const_iterator>    const_reverse_iterator; 
 
         private:
             size_type _capacite;
