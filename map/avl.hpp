@@ -200,6 +200,7 @@ namespace ft
                     {
                             _node_allocator.destroy(root);
                             _node_allocator.deallocate(root, 1);
+                            _size--;
                             return NULL;
                     }
                     else if (root->left == NULL)
@@ -207,6 +208,7 @@ namespace ft
                         node_type* temp = root->right;
                         _node_allocator.destroy(root);
                         _node_allocator.deallocate(root, 1);
+                        _size--;
                         return temp;
                     }
                     else if (root->right == NULL)
@@ -214,6 +216,7 @@ namespace ft
                         node_type* temp = root->left;
                         _node_allocator.destroy(root);
                         _node_allocator.deallocate(root, 1);
+                        _size--;
                         return temp;
                     }
                     node_type* temp = min_node(root->right);
@@ -250,21 +253,22 @@ namespace ft
                 std::swap(this->_root, other._root);
             }
 
-            void *clear(node_type *node)
+            void clear(node_type *node)
 		    {
 		    	if (node == NULL)
-		    		return;
+		    		return ;
 		    	clear(node->left);
 		    	clear(node->right);
 		    	_node_allocator.destroy(node);
 		    	_node_allocator.deallocate(node, 1);
 		    }
 
-            // void    clear(node_type *root)
-            // {
-            //     clear(root);
-            //     _root = NULL;
-            // }
+            void    clear()
+            {
+                clear(_root);
+                _root = NULL;
+                _size = 0;
+            }
 
             node_type *incrementation(node_type *root,  node_type *node)
 			{

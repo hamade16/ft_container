@@ -63,7 +63,7 @@ namespace ft
 
             map& operator= (const map& x)
             {
-                _tree.clear(_tree._root);
+                clear();
                 this->_alloc = x._alloc;
                 this->_compare = x._compare;
                 this->insert(x.begin(), x.end());
@@ -126,7 +126,7 @@ namespace ft
 
          bool empty() const
         {
-            return !(_tree.size);
+            return !(_tree.size());
         }
 
 
