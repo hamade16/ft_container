@@ -41,7 +41,10 @@ namespace ft
             allocator_type  _alloc;
         public: 
             
-            explicit map (const key_compare& comp = key_compare(), const allocator_type& alloc = allocator_type()): _tree(comp, alloc), _compare(comp), _alloc(alloc){};
+            explicit map (const key_compare& comp = key_compare(), const allocator_type& alloc = allocator_type()): _tree(comp, alloc), _compare(comp), _alloc(alloc)
+            {
+        
+            };
 
             template <class InputIterator>
             map (InputIterator first, InputIterator last, const key_compare& comp = key_compare(), const allocator_type& alloc = allocator_type()) : _tree(comp, alloc), _compare(comp), _alloc(alloc)
@@ -60,14 +63,10 @@ namespace ft
 
             map& operator= (const map& x)
             {
-                _tree.clear();
+                _tree.clear(_tree._root);
                 this->_alloc = x._alloc;
                 this->_compare = x._compare;
-                iterator it = x.begin();
-                while (it++)
-                {
-                    this->insert(*it);
-                }
+                this->insert(x.begin(), x.end());
                 return (*this);
             }
 
@@ -81,6 +80,7 @@ namespace ft
             const_iterator begin() const
             {
                 const_iterator it(_tree.min_node(_tree._root), _tree._root);
+                return it;
             }
 
             iterator end()
@@ -254,17 +254,17 @@ namespace ft
                 return (const_iterator(_tree.upper_bound(k), _tree._root));
             }
 
-            // pair<const_iterator,const_iterator> equal_range (const key_type& k) const
-            // {
-            //     pair<const_iterator, const_iterator> p = make_pair(lower_bound(k), upper_bound(k));
-            //     return(p);
-            // }
+            pair<const_iterator,const_iterator> equal_range (const key_type& k) const
+            {
+                pair<const_iterator, const_iterator> p = make_pair(lower_bound(k), upper_bound(k));
+                return(p);
+            }
 
-            // pair<iterator,iterator> equal_range (const key_type& k) const
-            // {
-            //     pair<iterator, iterator> p = make_pair(lower_bound(k), upper_bound(k));
-            //     return(p);
-            // }
+            pair<iterator,iterator> equal_range (const key_type& k)
+            {
+                pair<iterator, iterator> p = make_pair(lower_bound(k), upper_bound(k));
+                return(p);
+            }
 
 /*---------------------------------------Observers:------------------------------------------------------*/
             key_compare key_comp() const

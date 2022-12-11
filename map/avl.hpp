@@ -40,10 +40,8 @@ namespace ft
                 //node* newNode(int key);
                 node_type * node1 = _node_allocator.allocate(1);
                 _node_allocator.construct(node1, x);
-                //new_node_all = node1;
                 node1->left = NULL;
                 node1->right = NULL;
-               // node1->parent = NULL;
                 node1->height = 1; // new node is initially
                                   // added at leaf
                 node1->balance_factor = 0;
@@ -104,7 +102,20 @@ namespace ft
                 return (_size);
             }
 
+
             node_type *min_node(node_type *root)
+            {
+                node_type *current = root;
+                node_type *tmp = current;
+			    while (current != NULL)
+                {
+                    tmp = current;
+				    current = current->left;
+                }
+			    return tmp;
+            }
+
+            node_type *min_node(node_type *root) const
             {
                 node_type *current = root;
                 node_type *tmp = current;
@@ -239,7 +250,7 @@ namespace ft
                 std::swap(this->_root, other._root);
             }
 
-            void clear(node_type *node)
+            void *clear(node_type *node)
 		    {
 		    	if (node == NULL)
 		    		return;
@@ -249,11 +260,11 @@ namespace ft
 		    	_node_allocator.deallocate(node, 1);
 		    }
 
-            void    clear()
-            {
-                clear(this->_root);
-                _root = NULL;
-            }
+            // void    clear(node_type *root)
+            // {
+            //     clear(root);
+            //     _root = NULL;
+            // }
 
             node_type *incrementation(node_type *root,  node_type *node)
 			{

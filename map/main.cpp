@@ -3,29 +3,18 @@
 
 int main()
 {
-  ft::map<char,int> mymap;
+  
+  ft::map<char,int> first;
+  ft::map<char,int> second;
 
-  //ft::map<char,int>::key_compare mycomp = mymap.key_comp();
+  first['x']=8;
+  first['y']=16;
+  first['z']=32;
 
-  mymap['a']=100;
-  mymap['b']=200;
-  mymap['c']=300;
+  second=first;                // second now contains 3 ints
+  first=ft::map<char,int>();  // and first is now empty
 
-ft::map<char, int>::reverse_iterator _it;
-_it = mymap.rbegin();
-//_it--;
-std::cout << _it->first << std::endl;
-
-
-  // std::cout << "mymap contains:\n";
-
-  // char highest = mymap.rbegin()->first;     // key value of last element
-
-  // std::map<char,int>::iterator it = mymap.begin();
-  // do {
-  //   std::cout << it->first << " => " << it->second << '\n';
-  // } while ( mycomp((*it++).first, highest) );
-
-  // std::cout << '\n';
+  std::cout << "Size of first: " << first.size() << '\n';
+  std::cout << "Size of second: " << second.size() << '\n';
   return 0;
 }
