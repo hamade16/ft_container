@@ -40,7 +40,7 @@ namespace ft
                 //node* newNode(int key);
                 node_type * node1 = _node_allocator.allocate(1);
                 _node_allocator.construct(node1, x);
-                new_node_all = node1;
+                //new_node_all = node1;
                 node1->left = NULL;
                 node1->right = NULL;
                // node1->parent = NULL;
@@ -301,27 +301,29 @@ namespace ft
 				return succ;
 			}
 
-            node_type *decrementation(node_type *node) const
+            node_type *decrementation(node_type *root,  node_type *node)
+			{
+				if (node == NULL)
+					return max_node(root);
+				return decrementation(root, node->data.first);
+			}
+
+            const node_type *decrementation(node_type *root,  node_type *node) const
 			{
 				if (node == max_node(this->_root))
 					return max_node(this->_root);
-				return decrementation(_root, node->data.first);
+				return decrementation(root, node->data.first);
 			}
 
-            const node_type *decrementation(const node_type *node) const
-			{
-				if (node == max_node(this->_root))
-					return max_node(this->_root);
-				return decrementation(_root, node->data.first);
-			}
-
-            node_type* decrementation(node_type *rt, key_type k) const
+            node_type* decrementation(node_type *rt, key_type k)
 		    {
 		    	node_type* pred = NULL;
 		    	while (true)
 		    	{
 		    		if (_compare(k, rt->data.first))
+                    {
 		    			rt = rt->left;
+                    }
 		    		else if (_compare(rt->data.first, k))
 		    		{
 		    			pred = rt;
@@ -330,7 +332,8 @@ namespace ft
 		    		else
 		    		{
 		    			if (rt->left!= NULL)
-		    				pred = max_node(rt->left);
+                            pred = rt->left;
+		    				//pred = max_node(rt->left);
 		    			break;
 		    		}
 		    		if (rt == NULL)

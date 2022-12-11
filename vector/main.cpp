@@ -8,13 +8,14 @@
 using namespace std;
 int main()
 {
-  ft::vector<char,int> v;
+  ft::vector<int> v;
   v.assign (7,100);
 
 
   // show content:
-  ft::vector<int>::iterator rit;
-  rit = v.begin();
+  ft::vector<int>::reverse_iterator rit;
+  rit = v.rend();
+  rit--;
   std::cout << *rit << std::endl;
   // ft::vector<int> first;
   // ft::vector<int> second;

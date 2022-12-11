@@ -11,7 +11,7 @@ namespace ft{
             typedef Iter*                pointer;
             typedef Iter&                reference;
             typedef std::ptrdiff_t       difference_type;
-            // typedef typename std::iterator_traits<iterator_type>::iterator_category iterator_category;
+            //typedef typename std::iterator_traits<iterator_type>::iterator_category iterator_category;
 
             private:
                 pointer it;
@@ -31,6 +31,11 @@ namespace ft{
                     this->it = src.base();
                 }
 
+                random_access_iterator(const random_access_iterator &it)
+                {
+                    *this = it;
+                }
+
                 pointer base() const
                 {
                     return it;
@@ -38,7 +43,7 @@ namespace ft{
 
                 random_access_iterator    &operator=(random_access_iterator const & src)
                 {
-                    this->it = src.it;
+                    this->it = src.base();
                     return(*this);
                 }
                 bool    operator==(random_access_iterator const & src)

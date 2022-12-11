@@ -8,6 +8,7 @@
 # include "../utils/pair.hpp"
 # include "./bidirectional_iterators.hpp"
 # include "../vector/vector.hpp"
+# include "../utils/reverse_iterator.hpp"
 
 namespace ft
 {
@@ -29,6 +30,8 @@ namespace ft
             typedef typename allocator_type::const_pointer   const_pointer;
             typedef ft::iterator<value_type, node, tree> iterator;
             typedef ft::iterator<const value_type, node, tree> const_iterator;
+            typedef ft::reverse_iterator<iterator>          reverse_iterator;
+            typedef ft::reverse_iterator<const_iterator>    const_reverse_iterator;
             typedef typename allocator_type::size_type       size_type;
             typedef typename allocator_type::difference_type difference_type;
 
@@ -71,7 +74,7 @@ namespace ft
             /*-----------------------------iterators-------------------------------------------------------------------------------*/
             iterator    begin()
             {
-                 iterator it(_tree.min_node(_tree._root), _tree._root);
+                iterator it(_tree.min_node(_tree._root), _tree._root);
                 return(it);
             }
 
@@ -82,14 +85,36 @@ namespace ft
 
             iterator end()
             {
-                iterator it;
-                return (it);
+                iterator it(NULL,  _tree._root);
+                return(it);
             }
 
             const_iterator end() const
             {
-                const_iterator it;
+                const_iterator it(NULL, _tree._root);
                 return (it);
+            }
+
+            reverse_iterator rbegin()
+            {
+              reverse_iterator rev_it(end());
+              return (rev_it);
+            }
+            const_reverse_iterator rbegin() const
+            {
+                const_reverse_iterator rev_it(end());
+                return (rev_it);
+            }
+            reverse_iterator  rend()
+            {
+              reverse_iterator rev_it(begin());
+              return (rev_it);
+            }
+
+            const_reverse_iterator rend() const
+            {
+                const_reverse_iterator rev_it(begin());
+                return (rev_it);
             }
 
 /*------------------------------------------------capacity----------------------------------------------*/
@@ -229,17 +254,17 @@ namespace ft
                 return (const_iterator(_tree.upper_bound(k), _tree._root));
             }
 
-            pair<const_iterator,const_iterator> equal_range (const key_type& k) const
-            {
-                pair<const_iterator, const_iterator> p = make_pair(lower_bound(k), upper_bound(k));
-                return(p);
-            }
+            // pair<const_iterator,const_iterator> equal_range (const key_type& k) const
+            // {
+            //     pair<const_iterator, const_iterator> p = make_pair(lower_bound(k), upper_bound(k));
+            //     return(p);
+            // }
 
-            pair<iterator,iterator> equal_range (const key_type& k) const
-            {
-                pair<iterator, iterator> p = make_pair(lower_bound(k), upper_bound(k));
-                return(p);
-            }
+            // pair<iterator,iterator> equal_range (const key_type& k) const
+            // {
+            //     pair<iterator, iterator> p = make_pair(lower_bound(k), upper_bound(k));
+            //     return(p);
+            // }
 
 /*---------------------------------------Observers:------------------------------------------------------*/
             key_compare key_comp() const
@@ -247,10 +272,10 @@ namespace ft
                 return (_compare);
             }
 
-            value_compare value_comp() const
-            {
-                return (value_comp(_compare));
-            }
+            // value_compare value_comp() const
+            // {
+            //     return (value_comp(_compare));
+            // }
     };
 };
 #endif

@@ -64,9 +64,8 @@ namespace ft
 			}
 			iterator operator--()
             {
-                iterator tmp = this;
-                this->_node = _avl->decrementation(_node);
-                return (*tmp);
+                this->_node = _avl.decrementation(_root, _node);
+                return (*this);
             }
 			iterator operator-- (int) {
 				iterator _old = *this;
