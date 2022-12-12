@@ -30,6 +30,20 @@ namespace ft
             {
                 
             }
+
+            avl(avl const &av)
+            {
+                *this = av;
+            }
+
+            avl &operator=(const avl &av)
+            {
+                this->_all = av._all;
+                this->_compare = av._compare;
+                this->_root = av._root;
+                this->_size = av._size;
+                return *this;
+            }
             ~avl()
             {
 
@@ -127,7 +141,7 @@ namespace ft
 			    return tmp;
             }
 
-            node_type *max_node(node_type *root)
+            node_type *max_node(node_type *root) const
             {
                 node_type *current = root;
                 node_type *tmp = current;
@@ -270,7 +284,7 @@ namespace ft
                 _size = 0;
             }
 
-            node_type *incrementation(node_type *root,  node_type *node)
+            node_type *incrementation(node_type *root, const node_type *node) const
 			{
 				if (node == max_node(this->_root) || node == NULL)
 				{
@@ -280,17 +294,8 @@ namespace ft
 			}
 
 
-            const node_type *incrementation(node_type *root, const node_type *node) const
-			{
-				if (node == max_node(this->_root) || node == NULL)
-				{
-					return NULL;
-				}
-				return (incrementation(root, node->data.first));
-			}
 
-
-            node_type* incrementation(node_type *root, key_type k) 
+            node_type* incrementation(node_type *root, key_type k) const
 			{
 				node_type *succ = NULL;
 				while (true)
@@ -316,21 +321,16 @@ namespace ft
 				return succ;
 			}
 
-            node_type *decrementation(node_type *root,  node_type *node)
+            
+
+            node_type *decrementation(node_type *root,  const node_type *node) const
 			{
 				if (node == NULL)
 					return max_node(root);
 				return decrementation(root, node->data.first);
 			}
 
-            const node_type *decrementation(node_type *root,  node_type *node) const
-			{
-				if (node == max_node(this->_root))
-					return max_node(this->_root);
-				return decrementation(root, node->data.first);
-			}
-
-            node_type* decrementation(node_type *rt, key_type k)
+            node_type* decrementation(node_type *rt, const key_type k) const 
 		    {
 		    	node_type* pred = NULL;
 		    	while (true)

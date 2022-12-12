@@ -4,15 +4,10 @@
 int main()
 {
   
-  std::map<char, int> first;
-  //ft::map<char,int> m_first;
- ft::map<char, int> m_first;
-
-    for (size_t i = 97; i < 110; i++)
-    {
-        first[i - 97] = i;
-        m_first[i - 97] = i;
-    }
+  ft::map<int, char> my_m;
+  ft::map<int, char>::const_iterator my_it;
+  ft::map<int, char>::iterator my_it1;
+  my_it = my_m.begin();
    //ft::map<char,std::string> mymap;
 
   // mymap['a']="an element";

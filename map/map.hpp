@@ -29,7 +29,7 @@ namespace ft
             typedef typename allocator_type::pointer         pointer;
             typedef typename allocator_type::const_pointer   const_pointer;
             typedef ft::iterator<value_type, node, tree> iterator;
-            typedef ft::iterator<const value_type, node, tree> const_iterator;
+            typedef ft::const_iterator<value_type, node, tree> const_iterator;
             typedef ft::reverse_iterator<iterator>          reverse_iterator;
             typedef ft::reverse_iterator<const_iterator>    const_reverse_iterator;
             typedef typename allocator_type::size_type       size_type;
@@ -73,25 +73,25 @@ namespace ft
             /*-----------------------------iterators-------------------------------------------------------------------------------*/
             iterator    begin()
             {
-                iterator it(_tree.min_node(_tree._root), _tree._root);
+                iterator it(_tree.min_node(_tree._root), _tree._root, &_tree);
                 return(it);
             }
 
             const_iterator begin() const
             {
-                const_iterator it(_tree.min_node(_tree._root), _tree._root);
+                const_iterator it(_tree.min_node(_tree._root), _tree._root, &_tree);
                 return it;
             }
 
             iterator end()
             {
-                iterator it(NULL,  _tree._root);
+                iterator it(NULL,  _tree._root, &_tree);
                 return(it);
             }
 
             const_iterator end() const
             {
-                const_iterator it(NULL, _tree._root);
+                const_iterator it(NULL, _tree._root, &_tree);
                 return (it);
             }
 
@@ -222,7 +222,7 @@ namespace ft
                     else if (_compare(tmp->data.first, k))
                         tmp = tmp->right;
                     else
-                        return (iterator(tmp, _tree._root));
+                        return (iterator(tmp, _tree._root, &_tree));
                 }
                 return (end());
             }
