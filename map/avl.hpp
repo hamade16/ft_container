@@ -293,6 +293,15 @@ namespace ft
 				return (incrementation(root, node->data.first));
 			}
 
+            node_type *incrementation(node_type *root, node_type *node)
+			{
+				if (node == max_node(this->_root) || node == NULL)
+				{
+					return NULL;
+				}
+				return (incrementation(root, node->data.first));
+			}
+
 
 
             node_type* incrementation(node_type *root, key_type k) const
@@ -321,7 +330,39 @@ namespace ft
 				return succ;
 			}
 
-            
+            node_type* incrementation(node_type *root, key_type k)
+			{
+				node_type *succ = NULL;
+				while (true)
+				{
+					if (_compare(k, root->data.first))
+					{
+						succ = root;
+						root = root->left;
+					}
+					else if (_compare(root->data.first, k))
+						root = root->right;
+					else
+					{
+						if (root->right != NULL)
+							succ = min_node(root->right);
+						break;
+					}
+				}
+				if (succ == NULL)
+                {
+					return max_node(this->_root);
+                }
+				return succ;
+			}
+
+
+            node_type *decrementation(node_type *root, node_type *node)
+			{
+				if (node == NULL)
+					return max_node(root);
+				return decrementation(root, node->data.first);
+			}
 
             node_type *decrementation(node_type *root,  const node_type *node) const
 			{
@@ -331,6 +372,33 @@ namespace ft
 			}
 
             node_type* decrementation(node_type *rt, const key_type k) const 
+		    {
+		    	node_type* pred = NULL;
+		    	while (true)
+		    	{
+		    		if (_compare(k, rt->data.first))
+                    {
+		    			rt = rt->left;
+                    }
+		    		else if (_compare(rt->data.first, k))
+		    		{
+		    			pred = rt;
+		    			rt = rt->right;
+		    		}
+		    		else
+		    		{
+		    			if (rt->left!= NULL)
+                            pred = rt->left;
+		    				//pred = max_node(rt->left);
+		    			break;
+		    		}
+		    		if (rt == NULL)
+		    			return NULL;
+		    	}
+		    	return pred;
+		    }
+
+            node_type* decrementation(node_type *rt, key_type k)
 		    {
 		    	node_type* pred = NULL;
 		    	while (true)
