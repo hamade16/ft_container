@@ -27,7 +27,7 @@ namespace ft
 
 		public:
 			// construct && destruct
-			iterator() : _node(NULL), _root(NULL), _avl(NULL) {};
+			iterator() : _node(NULL), _root(NULL), _avl() {};
 			iterator( Node* node, Node* root, Avl *avl) : _node(node), _root(root), _avl(avl) {};
 			~iterator() {};
 			iterator	operator = (const iterator &x)
