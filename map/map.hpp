@@ -58,7 +58,7 @@ namespace ft
         
             map (const map& x)
             {
-                this = x;
+                *this = x;
             }
 
             map& operator= (const map& x)
