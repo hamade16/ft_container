@@ -1874,6 +1874,7 @@ void testOperations()
                 m.insert(std::make_pair(i, "value"));
                 ft_m.insert(ft::make_pair(i, "value"));
             }
+            std::cout << "hna1\n";
             start = get_time();
             res = m.lower_bound(1e5)->first;
             end = get_time();
@@ -1893,6 +1894,7 @@ void testOperations()
             m.insert(std::make_pair(arr[i], "value"));
             ft_m.insert(ft::make_pair(arr[i], "value"));
         }
+        std::cout << "hna3\n";
         std::map<int, std::string> const c_m(m.begin(), m.end());
         ft::map<int, std::string> const c_ft_m(ft_m.begin(), ft_m.end());
         cond = (cond && (m.lower_bound(15)->first == ft_m.lower_bound(15)->first));
@@ -1906,6 +1908,7 @@ void testOperations()
         cond = (cond && (c_m.lower_bound(63)->first == c_ft_m.lower_bound(63)->first));
         cond = (cond && (c_m.lower_bound(120)->first == c_ft_m.lower_bound(120)->first));
         cond = (cond && (c_m.lower_bound(70)->first == c_ft_m.lower_bound(70)->first));
+        std::cout << "hna4\n";
         EQUAL(cond);
     }
     std::cout << "\t\033[1;37m[-------------------- [" << std::setw(40) << std::left << " upper_bound method "

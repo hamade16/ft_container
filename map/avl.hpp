@@ -465,88 +465,89 @@ namespace ft
                         return root;
             }
 
-            node_type* lower_bound (const key_type& k)
-            {
-                return lower_bound(_root, k);
-            }
+            // node_type* lower_bound (const key_type& k)
+            // {
+            //     return lower_bound(_root, k);
+            // }
 
-            node_type* lower_bound (const key_type& k) const
-            {
-                return lower_bound(_root, k);
-            }
+            // node_type* lower_bound (const key_type& k) const
+            // {
+            //     return lower_bound(_root, k);
+            // }
 
-            node_type*  lower_bound(node_type *root, const key_type& k)
-            {
-                node_type* tmp = min_node(root);
-                while (_compare(tmp->data.first, k))
+            // node_type*  lower_bound(node_type *root, const key_type& k)
+            // {
+            //     node_type* tmp = min_node(root);
+            //     while (_compare(tmp->data.first, k))
+            //     {
+            //         tmp = incrementation(root, tmp);
+            //     }
+            //     if (tmp == NULL)
+            //     {
+            //         std::cout << "hna2a\n";
+            //         return NULL;
+            //     }
+            //     else
+            //     {
+                    
+            //         return(tmp);
+            //     }
+            // }
+
+            // node_type*  lower_bound(node_type *root, const key_type& k) const
+            // {
+            //     node_type* tmp = min_node(root);
+            //     while (_compare(tmp->data.first, k))
+            //     {
+            //         tmp = incrementation(root, tmp);
+            //     }
+            //     if (tmp == NULL)
+            //         return NULL;
+            //     else
+            //         return(tmp);
+            // }
+            // 
+
+            Node*   lower_bound(const key_type & k) const
                 {
-                    tmp = incrementation(root, tmp);
-                }
-                if (tmp == NULL)
-                    return NULL;
-                else
-                    return(tmp);
-            }
+                    Node    *tmp = this->_root;
+                    Node    *lower_bound = NULL;
 
-            node_type*  lower_bound(node_type *root, const key_type& k) const
-            {
-                node_type* tmp = min_node(root);
-                while (_compare(tmp->data.first, k))
+                    while (tmp != NULL)
+                    {
+                        if (!_compare(tmp->data.first, k) && !_compare(k, tmp->data.first))
+                        {
+                            lower_bound = tmp;
+                            break ;
+                        }
+                        if (_compare(k, tmp->data.first) == true)
+                        {
+                            lower_bound = tmp;
+                            tmp = tmp->left;
+                        }
+                        else
+                            tmp = tmp->right;
+                    }
+                    return (lower_bound);
+                }
+
+            Node*   upper_bound(const key_type & k) const
                 {
-                    tmp = incrementation(root, tmp);
-                }
-                if (tmp == NULL)
-                    return NULL;
-                else
-                    return(tmp);
-            }
+                    Node    *tmp = this->_root;
+                    Node    *upper_bound = NULL;
 
-            node_type*  upper_bound (const key_type& k)
-            {
-                return upper_bound(_root, k);
-            }
-
-            node_type*  upper_bound (const key_type& k) const
-            {
-                return upper_bound(_root, k);
-            }
-
-            node_type*  upper_bound (node_type *root, const key_type& k) const
-            {
-                node_type* tmp = min_node(root);
-                while (_compare(tmp->data.first, k))
-                {
-                    tmp = incrementation(root, tmp);
+                    while (tmp != NULL)
+                    {
+                        if (_compare(k, tmp->data.first) == true)
+                        {
+                            upper_bound = tmp;
+                            tmp = tmp->left;
+                        }
+                        else
+                            tmp = tmp->right;
+                    }
+                    return (upper_bound);
                 }
-                if (tmp == NULL)
-                    return NULL;
-                else if (k == tmp->data.first)
-                {
-                    tmp = incrementation(root, tmp);
-                    return (tmp);
-                }
-                else
-                   return(tmp);
-            }
-
-
-            node_type*  upper_bound (node_type *root, const key_type& k)
-            {
-                node_type* tmp = min_node(root);
-                while (_compare(tmp->data.first, k))
-                {
-                    tmp = incrementation(root, tmp);
-                }
-                if (tmp == NULL)
-                    return NULL;
-                else if (k == tmp->data.first)
-                {
-                    tmp = incrementation(root, tmp);
-                    return (tmp);
-                }
-                else
-                   return(tmp);
-            }
     };
 }
 #endif
