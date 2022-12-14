@@ -242,19 +242,27 @@ namespace ft
                     return root;
                 root->height = 1 + max(height(root->left), height(root->right));
                 root->balance_factor = getbalance(root);
-                 if (root->balance_factor > 1 && root->left->balance_factor >= 0)
-                         return right_rotate(root);
-                if (root->balance_factor > 1 && root->left->balance_factor < 0)
+                 if (root->balance_factor < -1)
                 {
+                    if (root->right->balance_factor <= 0)
+                        return left_rotate(root);
+                    else 
+                    {
+                         root->right = right_rotate(root->right);
+                        return left_rotate(root);
+                    }
+                }
+                else if(root->balance_factor > 1)
+                {
+                    if (root->left->balance_factor >= 0)
+                    {
+                        return right_rotate(root);
+                    }
+                    else
+                    {
                         root->left = left_rotate(root->left);
                         return right_rotate(root);
-                }
-                if (root->balance_factor < -1 && root->right->balance_factor <= 0)
-                        return left_rotate(root);
-                if (root->balance_factor < -1 && root->right->balance_factor > 0)
-                {
-                        root->right = right_rotate(root->right);
-                        return left_rotate(root);
+                    }
                 }
                 return root;
             }
@@ -286,7 +294,9 @@ namespace ft
 
             node_type *incrementation(node_type *root, const node_type *node) const
 			{
-				if (node == max_node(this->_root) || node == NULL)
+                
+
+				if (node == max_node(root) || node == NULL)
 				{
 					return NULL;
 				}
@@ -306,6 +316,7 @@ namespace ft
 
             node_type* incrementation(node_type *root, key_type k) const
 			{
+                
 				node_type *succ = NULL;
 				while (true)
 				{
@@ -353,6 +364,7 @@ namespace ft
                 {
 					return max_node(this->_root);
                 }
+                
 				return succ;
 			}
 
@@ -458,7 +470,25 @@ namespace ft
                 return lower_bound(_root, k);
             }
 
+            node_type* lower_bound (const key_type& k) const
+            {
+                return lower_bound(_root, k);
+            }
+
             node_type*  lower_bound(node_type *root, const key_type& k)
+            {
+                node_type* tmp = min_node(root);
+                while (_compare(tmp->data.first, k))
+                {
+                    tmp = incrementation(root, tmp);
+                }
+                if (tmp == NULL)
+                    return NULL;
+                else
+                    return(tmp);
+            }
+
+            node_type*  lower_bound(node_type *root, const key_type& k) const
             {
                 node_type* tmp = min_node(root);
                 while (_compare(tmp->data.first, k))
@@ -475,6 +505,30 @@ namespace ft
             {
                 return upper_bound(_root, k);
             }
+
+            node_type*  upper_bound (const key_type& k) const
+            {
+                return upper_bound(_root, k);
+            }
+
+            node_type*  upper_bound (node_type *root, const key_type& k) const
+            {
+                node_type* tmp = min_node(root);
+                while (_compare(tmp->data.first, k))
+                {
+                    tmp = incrementation(root, tmp);
+                }
+                if (tmp == NULL)
+                    return NULL;
+                else if (k == tmp->data.first)
+                {
+                    tmp = incrementation(root, tmp);
+                    return (tmp);
+                }
+                else
+                   return(tmp);
+            }
+
 
             node_type*  upper_bound (node_type *root, const key_type& k)
             {

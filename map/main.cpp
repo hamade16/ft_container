@@ -3,24 +3,30 @@
 
 int main()
 {
-  
-  ft::map<int, char> my_m;
-  ft::map<int, char>::const_iterator my_it;
-  ft::map<int, char>::iterator my_it1;
-  my_it = my_m.begin();
-   //ft::map<char,std::string> mymap;
+  ft::map<int, std::string> ft_m3;
+  for (size_t i = 0; i < 1e6; i++)
+  {
+      ft_m3.insert(ft::make_pair(i, "string1"));
+  }
 
-  // mymap['a']="an element";
-  // mymap['b']="another element";
-  // mymap['c']=mymap['b'];
+//  for (size_t i = 0; i < 1e6; ++i)
+//         {
+//             int n = distr(generator);
+//             int ret1 = m3.erase(n);
+//             int ret2 = ft_m3.erase(n);
 
-  // std::cout << "mymap['a'] is " << mymap['a'] << '\n';
-  // std::cout << "mymap['b'] is " << mymap['b'] << '\n';
-  // std::cout << "mymap['c'] is " << mymap['c'] << '\n';
-  // std::cout << "mymap['d'] is " << mymap['d'] << '\n';
+//             if (ret1 != ret2)
+//             {
+//                 cond = false;
+//                 break;
+//             }
+//         }
 
-  // std::cout << "mymap now contains " << mymap.size() << " elements.\n";
-
+ if (!ft_m3.empty())
+  {
+      ft_m3.erase(ft_m3.begin(), ft_m3.end());
+      ft_m3.erase(ft_m3.begin(), ft_m3.end());
+  }
 
   return 0;
 }

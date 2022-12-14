@@ -79,7 +79,8 @@ namespace ft
 
             const_iterator begin() const
             {
-                const_iterator it(_tree.min_node(_tree._root), _tree._root, &_tree);
+                tree ptr = _tree;
+                const_iterator it(_tree.min_node(_tree._root), _tree._root, &ptr);
                 return it;
             }
 
@@ -91,30 +92,27 @@ namespace ft
 
             const_iterator end() const
             {
-                const_iterator it(NULL, _tree._root, &_tree);
+                tree ptr = _tree;
+                const_iterator it(NULL, _tree._root, &ptr);
                 return (it);
             }
 
             reverse_iterator rbegin()
             {
-              reverse_iterator rev_it(end());
-              return (rev_it);
+              return reverse_iterator(end());
             }
             const_reverse_iterator rbegin() const
             {
-                const_reverse_iterator rev_it(end());
-                return (rev_it);
+                return const_reverse_iterator(end());
             }
             reverse_iterator  rend()
             {
-              reverse_iterator rev_it(begin());
-              return (rev_it);
+              return reverse_iterator(begin());
             }
 
             const_reverse_iterator rend() const
             {
-                const_reverse_iterator rev_it(begin());
-                return (rev_it);
+                return const_reverse_iterator(begin());
             }
 
 /*------------------------------------------------capacity----------------------------------------------*/
@@ -124,9 +122,14 @@ namespace ft
             return (_tree.size());
         }
 
-         bool empty() const
+        size_type max_size() const
         {
-            return !(_tree.size());
+            return _alloc.max_size();
+        }
+
+        bool empty() const
+        {
+            return !(_tree.size() > 0);
         }
 
 
@@ -163,7 +166,7 @@ namespace ft
             {
                 while (first != last)
                 {
-                    this->insert(*first);
+                    this-> insert(*first);
                     first++;
                 }
             }
@@ -196,6 +199,7 @@ namespace ft
 
             void erase (iterator first, iterator last)
             {
+                
                 ft::vector<key_type> vect;
                 while (first != last)
                 {
@@ -237,32 +241,36 @@ namespace ft
 
             iterator lower_bound (const key_type& k)
             {
-                return (iterator(_tree.lower_bound(k), _tree._root));
+                tree ptr = _tree;
+                return (iterator(_tree.lower_bound(k), _tree._root, &ptr));
             }
 
             const_iterator lower_bound (const key_type& k) const
             {
-                return (const_iterator(_tree.lower_bound(k), _tree._root));
+                tree ptr = _tree;
+                return (const_iterator(_tree.lower_bound(k), _tree._root, &ptr));
             }
 
             iterator upper_bound (const key_type& k)
             {
-                return (iterator(_tree.upper_bound(k), _tree._root));
+                tree ptr = _tree;
+                return (iterator(_tree.upper_bound(k), _tree._root, &ptr));
             }
             const_iterator upper_bound (const key_type& k) const
             {
-                return (const_iterator(_tree.upper_bound(k), _tree._root));
+                tree ptr = _tree;
+                return (const_iterator(_tree.upper_bound(k), _tree._root, &ptr));
             }
 
             pair<const_iterator,const_iterator> equal_range (const key_type& k) const
             {
-                pair<const_iterator, const_iterator> p = make_pair(lower_bound(k), upper_bound(k));
+                pair<const_iterator, const_iterator> p = ft::make_pair(lower_bound(k), upper_bound(k));
                 return(p);
             }
 
             pair<iterator,iterator> equal_range (const key_type& k)
             {
-                pair<iterator, iterator> p = make_pair(lower_bound(k), upper_bound(k));
+                pair<iterator, iterator> p = ft::make_pair(lower_bound(k), upper_bound(k));
                 return(p);
             }
 

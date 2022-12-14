@@ -60,11 +60,11 @@ namespace ft
 				return (&this->_node->data);
 			}
 			iterator& operator ++ () {
+				
 				this->_node = _avl->incrementation(_root, _node);
 				return (*this);
 			}
-			iterator operator ++ (int) {
-				
+			iterator operator ++ (int) {	
 				iterator _old = *this;
 				this->_node = _avl->incrementation(_root, _node);
 				return _old;
@@ -100,7 +100,7 @@ namespace ft
 		public:
 			// construct && destruct
 			const_iterator() : _node(NULL), _root(NULL), _avl() {};
-			const_iterator(const Node* node, Node* root, Avl *avl) : _node(node), _root(root), _avl(avl) {};
+			const_iterator( Node* node, Node* root, Avl *avl) : _node(node), _root(root), _avl(avl) {};
 			~const_iterator() {};
 			const_iterator	operator = (const const_iterator &x)
 			{
@@ -128,15 +128,17 @@ namespace ft
 				return (&this->_node->data);
 			}
 			
-			const_iterator& operator ++ () 
+			const_iterator operator ++ () 
 			{
+
 				this->_node = _avl->incrementation(_root, _node);
+
 				return (*this);
 			}
 			const_iterator operator ++ (int)
 			{
 				const_iterator _old = *this;
-				this->_node = _avl->incrementation(_root, _node);
+				operator ++ () ;
 				return _old;
 			}
 			const_iterator operator--() 

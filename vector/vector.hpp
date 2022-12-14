@@ -234,8 +234,7 @@ namespace ft
             }
             const_reverse_iterator rbegin() const
             {
-                const_reverse_iterator rev_it(end());
-                return (rev_it);
+                return const_reverse_iterator(end());
             }
             reverse_iterator  rend()
             {
