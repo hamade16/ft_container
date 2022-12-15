@@ -69,6 +69,17 @@ namespace ft
                 this->insert(x.begin(), x.end());
                 return (*this);
             }
+            // ---------- test dyal abdellah
+            void test()
+            {
+                for (int i = 0; i < 1e6; i++)
+                    _tree.insert(ft::make_pair(i, 1 + i));
+                std::cout << size() << std::endl;
+                for (int i = 0; i < 1e6; i++)
+                    _tree.delete_node(i);
+                std::cout << size() << std::endl;
+                std::cout << _tree._root->data.first << std::endl;
+            }
 
             /*-----------------------------iterators-------------------------------------------------------------------------------*/
             iterator    begin()
@@ -177,15 +188,19 @@ namespace ft
 
             void swap (map& x)
             {
-                _tree.swap(x._tree);
+                std::swap(this->_compare, x._compare);
+                std::swap(this->_alloc, x._alloc);
+                std::swap(this->_tree, x._tree);
+                //_tree.swap(x._tree);
             }
 
             size_type erase (const key_type& k)
             {
+                //size_type i = 0;
                 if (_tree.search(k))
                 {
                     _tree.delete_node(k);
-                    _tree._size--;
+                    //_tree._size--;
                     return (1);
                 }
                 return (0);
@@ -199,13 +214,17 @@ namespace ft
 
             void erase (iterator first, iterator last)
             {
-                iterator tmp(first);
-                while (first != last)
-                {
-                    tmp++;
-                    erase(first->first);
-                    first = tmp;
-                }
+                if (!empty())
+				{
+					ft::vector<Key> v; 
+					for (; first != last; first++) 
+						v.push_back(first->first);
+					for (size_t i = 0; i < v.size(); i++)
+					{
+						this->erase(v[i]);
+					}
+					
+				}
             }
 /*----------------------------------------------Operations-----------------------------------------------------------*/
             iterator find(const key_type &k)

@@ -16,6 +16,7 @@ namespace ft
 			typedef	iterator						iterator_type;
 			typedef	std::bidirectional_iterator_tag	iterator_category;
 			typedef	T								value_type;
+			// typedef	const T								value_typyye;
 			typedef	ptrdiff_t						difference_type;
 			typedef	value_type*						pointer;
 			typedef	value_type&						reference;
@@ -56,7 +57,7 @@ namespace ft
 			{
 				return (this->_node->data);
 			}
-			pointer operator -> () {
+			pointer operator -> () const {
 				return (&this->_node->data);
 			}
 			iterator& operator ++ () {

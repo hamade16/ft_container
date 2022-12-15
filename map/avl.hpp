@@ -233,10 +233,10 @@ namespace ft
                         _size--;
                         return temp;
                     }
-                    node_type* temp = min_node(root->right);
+                    node_type* temp = max_node(root->left);
                     _all.destroy(&root->data);
                     _all.construct(&root->data, temp->data);
-                    root->right = delete_node(root->right, temp->data.first);
+                    root->left = delete_node(root->left, temp->data.first);
                 }
                 if (root == NULL)
                     return root;
