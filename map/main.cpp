@@ -1,32 +1,58 @@
 #include "map.hpp"
+#include <iterator>
+#include <utility>
+#include <ctime>
+#include <iomanip>
+#include <unistd.h>
+#include <signal.h>
+#include <sys/time.h>
+#include <random>
 
 
 int main()
 {
-  ft::map<int, std::string> ft_m3;
-  for (size_t i = 0; i < 1e6; i++)
-  {
-      ft_m3.insert(ft::make_pair(i, "string1"));
-  }
+//   std::map<int, std::string> m3;
+//   std::map<int, std::string>::iterator it;
+//   ft::map<int, std::string> ft_m3;
+//   ft::map<int, std::string>::iterator ft_it;
+//   std::vector<int> vec;
+//   std::vector<int> ft_vec;
+//   std::random_device randDev;
+//   std::mt19937 generator(randDev());
+//   std::uniform_int_distribution<int> distr(0, 1e8);
+//   for (size_t i = 0; i < 100000; i++)
+//   {
+//       m3.insert(std::make_pair(i, "string1"));
+//       ft_m3.insert(ft::make_pair(i, "string1"));
+//   }
+//    for (size_t i = 0; i < 1e6; ++i)
+//   {
+//       int n = distr(generator);
+//       int ret1 = m3.erase(n);
+//       int ret2 = ft_m3.erase(n);
+//       if (ret1 != ret2)
+//       {
+//           //cond = false;
+//           break;
+//       }
+//   }
 
-//  for (size_t i = 0; i < 1e6; ++i)
-//         {
-//             int n = distr(generator);
-//             int ret1 = m3.erase(n);
-//             int ret2 = ft_m3.erase(n);
+//   // ft_m3.erase(9058947);
+//   if (!ft_m3.empty())
+//   {
+//       m3.erase(m3.begin(), m3.end());
+//       m3.erase(m3.begin(), m3.end());
+//       // ft_m3.erase(ft_m3.begin(), ft_m3.end());
+//       // ft_m3.erase(ft_m3.begin(), ft_m3.end());
+//   }
 
-//             if (ret1 != ret2)
-//             {
-//                 cond = false;
-//                 break;
-//             }
-//         }
+    ft::map<int, int> m;
+    ft::map<int, int>::iterator it;
+    ft::map<int, int>::reverse_iterator rit;
+    for (size_t i = 0; i < 10; i++)
+        m.insert(ft::make_pair(i, i));
+    for (it = --m.end(); it != m.begin(); --it)
+        std::cout << it->first << std::endl;
 
- if (!ft_m3.empty())
-  {
-      ft_m3.erase(ft_m3.begin(), ft_m3.end());
-      ft_m3.erase(ft_m3.begin(), ft_m3.end());
-  }
-
-  return 0;
+    return 0;
 }

@@ -1032,12 +1032,19 @@ void testIterators()
         std::string res, ft_res, c_res, c_ft_res;
         /*----------------------------------------------------*/
         for (std::map<int, std::string>::reverse_iterator it = m1.rbegin(); it != m1.rend(); ++it) // fill res from m1
+        {
+            // std::cout << it->second << std::endl;
             res += it->second;
+        }
+
         for (std::map<int, std::string>::const_reverse_iterator rit = m2.rbegin(); rit != m2.rend(); ++rit) // fill c_res from const m1
             c_res += rit->second;
-
+        // std::cout << ft_m1.rend()->first << std::endl;
         for (ft::map<int, std::string>::reverse_iterator it = ft_m1.rbegin(); it != ft_m1.rend(); ++it) // fill ft_res from ft_m1
+        {
+            std::cout << it->second << std::endl;
             ft_res += it->second;
+        }
         for (ft::map<int, std::string>::const_reverse_iterator rit = ft_m2.rbegin(); rit != ft_m2.rend(); ++rit) // fill c_ft_res from const ft_m1
             c_ft_res += rit->second;
         int arr[] = {12, 82, 37, 64, 15};
@@ -1046,7 +1053,11 @@ void testIterators()
             end_test.insert(ft::make_pair(arr[i], i));
         ft::map<int, int>::reverse_iterator rit = end_test.rend();
         rit--;
+        if (res != ft_res) std::cout << "ft_res" << std::endl;
+        if (c_res != c_ft_res) std::cout << "c_ft_res" << std::endl;
+        if (rit->first != 12) std::cout << "rit->first == 12" << std::endl;
         EQUAL(res == ft_res && c_res == c_ft_res && rit->first == 12);
+       // && rit->first == 12
      }
 }
 
@@ -1068,14 +1079,14 @@ void testCapacityMethods()
             }
 
             start = get_time();
-            m1.size();
+            std::cout << "dyalhom = " <<m1.size() << std::endl;
             end = get_time();
             diff = end - start;
             diff = (diff) ? (diff * TIME_FAC) : TIME_FAC;
             /*-----------------------------------------------------*/
             /*------------------ ft::maps ---------------------*/
             ualarm(diff * 1e3, 0);
-            ft_m1.size();
+            std::cout << "dyalna = " << ft_m1.size() << std::endl;
             ualarm(0, 0);
             /*----------------------------------------------------*/
         }
@@ -1100,6 +1111,16 @@ void testCapacityMethods()
         ft::map<int, std::string> ft_m4(ft_m1);
         ft::map<int, std::string> ft_m5(ft_m1.rbegin(), ft_m1.rend());
         /*----------------------------------------------------*/
+        std::cout << "1dyalhoum = " << m1.size() << std::endl;
+        std::cout << "1dyalne = " << ft_m1.size() << std::endl;
+        std::cout << "2dyalhoum = " << m2.size() << std::endl;
+        std::cout << "2dyalne = " << ft_m2.size() << std::endl;
+        std::cout << "3dyalhoum = " << m3.size() << std::endl;
+        std::cout << "3dyalne = " << ft_m3.size() << std::endl;
+        std::cout << "4dyalhoum = " << m4.size() << std::endl;
+        std::cout << "4dyalne = " << ft_m4.size() << std::endl;
+        std::cout << "5dyalhoum = " << m5.size() << std::endl;
+        std::cout << "5dyalne = " << ft_m5.size() << std::endl;
         EQUAL(m1.size() == ft_m1.size() && m2.size() == ft_m2.size() && m3.size() == ft_m3.size() && m5.size() == ft_m5.size() && m4.size() == ft_m4.size());
     }
 
@@ -1631,63 +1652,63 @@ void testModifiers()
 //     }
 // };
 
-// void testObservers()
-// {
-//     std::cout << "\t\033[1;37m[-------------------- [" << std::setw(40) << std::left << " key_comp method "
-//               << "] --------------------]\t\t\033[0m";
-//     {
-//         bool cond(true);
-//         std::map<int, int> m;
-//         ft::map<int, int> ft_m;
-//         std::map<int, int>::key_compare comp = m.key_comp();
-//         ft::map<int, int>::key_compare mycomp = ft_m.key_comp();
+void testObservers()
+{
+    std::cout << "\t\033[1;37m[-------------------- [" << std::setw(40) << std::left << " key_comp method "
+              << "] --------------------]\t\t\033[0m";
+    {
+        bool cond(true);
+        std::map<int, int> m;
+        ft::map<int, int> ft_m;
+        std::map<int, int>::key_compare comp = m.key_comp();
+        ft::map<int, int>::key_compare mycomp = ft_m.key_comp();
 
-//         for (size_t i = 0; i < 1e2; i++)
-//         {
-//             m.insert(std::make_pair(i, -1));
-//             ft_m.insert(ft::make_pair(i, -1));
-//         }
+        for (size_t i = 0; i < 1e2; i++)
+        {
+            m.insert(std::make_pair(i, -1));
+            ft_m.insert(ft::make_pair(i, -1));
+        }
 
-//         int highest = m.rbegin()->first;       // key value of last element
-//         int ft_highest = ft_m.rbegin()->first; // key value of last element
+        int highest = m.rbegin()->first;       // key value of last element
+        int ft_highest = ft_m.rbegin()->first; // key value of last element
 
-//         std::map<int, int>::iterator it = m.begin();
-//         ft::map<int, int>::iterator ft_it = ft_m.begin();
-//         do
-//         {
-//             if (!(it->first == ft_it->first && it->second == ft_it->second))
-//             {
-//                 cond = false;
-//                 break;
-//             }
+        std::map<int, int>::iterator it = m.begin();
+        ft::map<int, int>::iterator ft_it = ft_m.begin();
+        do
+        {
+            if (!(it->first == ft_it->first && it->second == ft_it->second))
+            {
+                cond = false;
+                break;
+            }
 
-//         } while (comp((*it++).first, highest) && mycomp((*ft_it++).first, ft_highest));
-//         EQUAL(cond);
-//     }
+        } while (comp((*it++).first, highest) && mycomp((*ft_it++).first, ft_highest));
+        EQUAL(cond);
+    }
 
-//     std::cout << "\t\033[1;37m[-------------------- [" << std::setw(40) << std::left << " value_comp method "
-//               << "] --------------------]\t\t\033[0m";
-//     {
-//         int sum(0);
-//         int s_key(0);
-//         ft::map<char, int> mymap;
+    // std::cout << "\t\033[1;37m[-------------------- [" << std::setw(40) << std::left << " value_comp method "
+    //           << "] --------------------]\t\t\033[0m";
+    // {
+    //     int sum(0);
+    //     int s_key(0);
+    //     ft::map<char, int> mymap;
 
-//         mymap['x'] = 1001;
-//         mymap['y'] = 2002;
-//         mymap['z'] = 3003;
+    //     mymap['x'] = 1001;
+    //     mymap['y'] = 2002;
+    //     mymap['z'] = 3003;
 
-//         ft::pair<char, int> highest = *mymap.rbegin(); // last element
+    //     ft::pair<char, int> highest = *mymap.rbegin(); // last element
 
-//         ft::map<char, int>::iterator it = mymap.begin();
-//         do
-//         {
-//             sum += it->second;
-//             s_key += it->first;
-//         } while (mymap.value_comp()(*it++, highest));
+    //     ft::map<char, int>::iterator it = mymap.begin();
+    //     do
+    //     {
+    //         sum += it->second;
+    //         s_key += it->first;
+    //     } while (mymap.value_comp()(*it++, highest));
 
-//         EQUAL(sum == 6006 && s_key == 363);
-//     }
-// }
+    //     EQUAL(sum == 6006 && s_key == 363);
+    // }
+ }
 
 // void testNonMemberSwap()
 // {
@@ -2047,23 +2068,23 @@ void testOperations()
     }
 }
 
-// void testAllocatorMethodes()
-// {
-//     std::cout << "\t\033[1;37m[-------------------- [" << std::setw(40) << std::left << " get_allocator method "
-//               << "] --------------------]\t\t\033[0m";
-//     {
-//         int psize;
-//         ft::map<char, int> mymap;
-//         ft::pair<const char, int> *p;
+void testAllocatorMethodes()
+{
+    std::cout << "\t\033[1;37m[-------------------- [" << std::setw(40) << std::left << " get_allocator method "
+              << "] --------------------]\t\t\033[0m";
+    {
+        int psize;
+        ft::map<char, int> mymap;
+        ft::pair<const char, int> *p;
 
-//         // allocate an array of 5 elements using mymap's allocator:
-//         p = mymap.get_allocator().allocate(5);
+        // allocate an array of 5 elements using mymap's allocator:
+        p = mymap.get_allocator().allocate(5);
 
-//         psize = sizeof(std::map<char, int>::value_type) * 5;
-//         EQUAL(psize == 40);
-//         mymap.get_allocator().deallocate(p, 5);
-//     }
-// }
+        psize = sizeof(std::map<char, int>::value_type) * 5;
+        EQUAL(psize == 40);
+        mymap.get_allocator().deallocate(p, 5);
+    }
+}
 
 // void testRetionalOperators()
 // {
@@ -2204,12 +2225,12 @@ void testOperations()
 //     EQUAL(((foo <= bar) == (ft_foo <= ft_bar)) && (res == ft_res));
 // }
 
-// void alarm_handler(int seg)
-// {
-//     (void)seg;
-//     std::cout << "\033[1;33mTLE\033[0m\n";
-//     kill(getpid(), SIGINT);
-// }
+void alarm_handler(int seg)
+{
+    (void)seg;
+    std::cout << "\033[1;33mTLE\033[0m\n";
+    kill(getpid(), SIGINT);
+}
 
 int main()
 {
@@ -2217,7 +2238,7 @@ int main()
     std::cout << RED << "________________________________________________________________________________________________________" << std::endl;
     std::cout << RED << "**** The test is taking so much time to test the all cases and the time complexity of each method ****" << std::endl;
     std::cout << RED << "--------------------------------------------------------------------------------------------------------" << RESET << std::endl;
-    //signal(SIGALRM, alarm_handler);
+    signal(SIGALRM, alarm_handler);
 
 //     std::cout << YELLOW << "Testing Iterators;" << RESET << std::endl;
 //     TEST_CASE(iterator_tests);
@@ -2229,29 +2250,29 @@ int main()
 //     TEST_CASE(testConstructors);
 //     std::cout << std::endl;
 
-//     std::cout << YELLOW << "Testing Iterator Methods;" << RESET << std::endl;
-//     TEST_CASE(testIterators);
-//     std::cout << std::endl;
-
-//     std::cout << YELLOW << "Testing Capacity Methods;" << RESET << std::endl;
-//     TEST_CASE(testCapacityMethods)
-//     std::cout << std::endl;
-
-//     std::cout << YELLOW << "Testing Access Element Methods; " << RESET << std::endl;
-//     TEST_CASE(testElementAccess);
-//     std::cout << std::endl;
-
-    // std::cout << YELLOW << "Testing Modifiers Methods;" << RESET << std::endl;
-    // TEST_CASE(testModifiers)
+    // std::cout << YELLOW << "Testing Iterator Methods;" << RESET << std::endl;
+    // TEST_CASE(testIterators);
     // std::cout << std::endl;
+
+    // std::cout << YELLOW << "Testing Capacity Methods;" << RESET << std::endl;
+    // TEST_CASE(testCapacityMethods)
+    // std::cout << std::endl;
+
+    // std::cout << YELLOW << "Testing Access Element Methods; " << RESET << std::endl;
+    // TEST_CASE(testElementAccess);
+    // std::cout << std::endl;
+
+    std::cout << YELLOW << "Testing Modifiers Methods;" << RESET << std::endl;
+    TEST_CASE(testModifiers)
+    std::cout << std::endl;
 
     // std::cout << YELLOW << "Testing Observers Methods;" << RESET << std::endl;
     // TEST_CASE(testObservers)
     // std::cout << std::endl;
 
-    std::cout << YELLOW << "Testing Operations Methods;" << RESET << std::endl;
-    TEST_CASE(testOperations)
-    std::cout << std::endl;
+    // std::cout << YELLOW << "Testing Operations Methods;" << RESET << std::endl;
+    // TEST_CASE(testOperations)
+    // std::cout << std::endl;
 
     // std::cout << YELLOW << "Testing Allocator Methods;" << RESET << std::endl;
     // TEST_CASE(testAllocatorMethodes)

@@ -199,20 +199,31 @@ namespace ft
 
             void erase (iterator first, iterator last)
             {
-                
-                ft::vector<key_type> vect;
+                iterator tmp(first);
                 while (first != last)
                 {
-                    vect.push_back(first->first);
-                    first++;
-                }
-                typename ft::vector<key_type>::iterator it = vect.begin();
-                while (it != vect.end())
-                {
-                    erase(*it);
-                    it++;
+                    tmp++;
+                    erase(first->first);
+                    first = tmp;
                 }
             }
+            // void erase (iterator first, iterator last)
+            // {
+                
+            //     ft::vector<key_type> vect;
+            //     while (first != last)
+            //     {
+            //         vect.push_back(first->first);
+            //         first++;
+            //     }
+            //     typename ft::vector<key_type>::iterator it = vect.begin();
+            //     while (it != vect.end())
+            //     {
+            //         erase(*it);
+            //         it++;
+            //     }
+            // }
+            //}
 /*----------------------------------------------Operations-----------------------------------------------------------*/
             iterator find(const key_type &k)
             {
@@ -284,6 +295,11 @@ namespace ft
             // {
             //     return (value_comp(_compare));
             // }
+/*-------------------------------Allocator:----------------------------------------------------------------------*/
+            allocator_type get_allocator() const
+            {
+                return _alloc;
+            }
     };
 };
 #endif
