@@ -207,23 +207,6 @@ namespace ft
                     first = tmp;
                 }
             }
-            // void erase (iterator first, iterator last)
-            // {
-                
-            //     ft::vector<key_type> vect;
-            //     while (first != last)
-            //     {
-            //         vect.push_back(first->first);
-            //         first++;
-            //     }
-            //     typename ft::vector<key_type>::iterator it = vect.begin();
-            //     while (it != vect.end())
-            //     {
-            //         erase(*it);
-            //         it++;
-            //     }
-            // }
-            //}
 /*----------------------------------------------Operations-----------------------------------------------------------*/
             iterator find(const key_type &k)
             {
