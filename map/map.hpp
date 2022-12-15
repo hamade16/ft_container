@@ -301,6 +301,31 @@ namespace ft
                 return _alloc;
             }
     };
+
+    template<class key, class value, class Compare, class Alloc>
+	bool operator>= (map<key, value, Compare, Alloc> const & lhs, map<key, value, Compare, Alloc> const & rhs) {
+		return !(lhs < rhs);
+	};
+	template<class key, class value, class Compare, class Alloc>
+	bool operator> (map<key, value, Compare, Alloc> const & lhs, map<key, value, Compare, Alloc> const & rhs) {
+		return (rhs < lhs);
+	};
+	template<class key, class value, class Compare, class Alloc>
+	bool operator<= (map<key, value, Compare, Alloc> const & lhs, map<key, value, Compare, Alloc> const & rhs) {
+		return !(rhs < lhs);
+	};
+	template<class key, class value, class Compare, class Alloc>
+	bool operator<  (map<key, value, Compare, Alloc> const & lhs, map<key, value, Compare, Alloc> const & rhs) {
+		return std::lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end());
+	};
+	template<class key, class value, class Compare, class Alloc>
+	bool operator!= (map<key, value, Compare, Alloc> const & lhs, map<key, value, Compare, Alloc> const & rhs) {
+		return !(lhs == rhs);
+	};
+	template<class key, class value, class Compare, class Alloc>
+	bool operator== (map<key, value, Compare, Alloc> const & lhs, map<key, value, Compare, Alloc> const & rhs) {
+		return ( std::equal(lhs.begin(), lhs.end(), rhs.begin()) && (lhs.size() == rhs.size()));
+	};
 };
 #endif
 
