@@ -152,6 +152,7 @@ namespace ft
             if (it != end())
                 return it->second;
             insert(ft::make_pair(k, mapped_type()));
+            //std::cout << "hoon" << std::endl;
             return (find(k)->second);
         }
 /*-----------------------------modifiers-----------------------------------------------------------------------------------------------*/
@@ -188,8 +189,8 @@ namespace ft
 
             void swap (map& x)
             {
-                std::swap(this->_compare, x._compare);
                 std::swap(this->_alloc, x._alloc);
+                std::swap(this->_compare, x._compare);
                 std::swap(this->_tree, x._tree);
                 //_tree.swap(x._tree);
             }
@@ -229,9 +230,9 @@ namespace ft
 /*----------------------------------------------Operations-----------------------------------------------------------*/
             iterator find(const key_type &k)
             {
-                node* tmp = size() ? _tree._root : NULL;
+                node* tmp = _tree._root;
                 while (tmp != NULL)
-                {
+                {  
                     if (_compare(k, tmp->data.first))
                     {
                         tmp = tmp->left;
@@ -239,10 +240,26 @@ namespace ft
                     else if (_compare(tmp->data.first, k))
                         tmp = tmp->right;
                     else
+                    {
                         return (iterator(tmp, _tree._root, &_tree));
+                    }
                 }
                 return (end());
             }
+
+            const_iterator find (const key_type& k) const {
+				node*	tmp = _tree._root;
+				while (tmp != NULL)
+				{
+					if (_compare(k, tmp->data.first))
+						tmp = tmp->left;
+					else if (_compare(tmp->data.first, k))
+						tmp = tmp->right;
+					else
+						return (const_iterator(tmp, _tree._root));
+				}
+				return end();
+			};
 
             size_type count (const key_type& k) const
             {
