@@ -52,13 +52,13 @@ namespace ft
                 _size = n;
                 _max_size = all.max_size();
                 _vector = all.allocate(n);
-                for(int i = 0; i < n; i++)
+                for(size_t i = 0; i < n; i++)
                     all.construct(_vector+i, val);
             }
 
             template <class InputIterator>
          vector (typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type first, InputIterator last,
-                 const allocator_type& alloc = allocator_type()) : _capacite(0), _size(0)
+                 const allocator_type& alloc = allocator_type()) : _capacite(0), _size(0), all(alloc)
                 {
                    size_type o = last - first;
                    _vector = all.allocate(o);
@@ -271,7 +271,7 @@ namespace ft
                     pointer v;
 
                     v = all.allocate(this->_capacite);
-                    int i;
+                    size_t i = 0;
                     for (i = 0; i < this->_size; i++)
                     {
                         all.construct(v+i, *(this->_vector+i));

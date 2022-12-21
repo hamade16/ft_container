@@ -21,9 +21,9 @@ namespace ft
 			typedef	value_type&						reference;
 
 		public:
-			Avl		*_avl;
 			Node*	_node;
 			Node*	_root;
+			Avl		*_avl;
 
 		public:
 			// construct && destruct
@@ -93,9 +93,9 @@ namespace ft
 			typedef	const value_type&						reference;
 
 		public:
-			const Avl		*_avl;
 			const Node* 	_node;
 			Node* 	_root;
+			const Avl		*_avl;
 
 		public:
 			// construct && destruct

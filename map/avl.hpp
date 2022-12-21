@@ -18,7 +18,6 @@ namespace ft
             typedef Compare							key_compare;
             typedef ft::pair<key_type, mapped_type> value_type;
             typedef Node node_type;
-            node_type    *new_node_all;
             node_type    *_root;
             unsigned int											_size;
         private: 
@@ -26,7 +25,7 @@ namespace ft
             key_compare _compare;
             typename Alloc::template rebind<node_type>::other	_node_allocator;
         public:
-            avl(const key_compare& comp = key_compare(), const allocator_type& alloc = allocator_type()): _root(NULL), _compare(comp), _all(alloc), _size(0)
+            avl(const key_compare& comp = key_compare(), const allocator_type& alloc = allocator_type()): _root(NULL), _size(0), _all(alloc), _compare(comp)
             {
                 
             }
@@ -153,17 +152,28 @@ namespace ft
 			    return tmp;
             }
 
+            void    swap(node_type & x)
+            {
+                std::swap(this->_compare, x._compare);
+                std::swap(this->_all, x._all);
+                std::swap(this->_root, x._root);
+                std::swap(this->_size, x._size);
+            }
+
             node_type* insert(node_type* node, value_type x)
             {
-                new_node_all = NULL;
                 if (node == NULL)
                 {
                   return (new_node(x));
                 }
-                if (x.first < node->data.first)
+                if (_compare(x.first,node->data.first))
                     node->left = insert(node->left, x);
-                else if (x.first > node->data.first)
-                    node->right = insert(node->right, x);
+                else if (_compare(node->data.first, x.first))
+                    node->right = insert(node->right, x);                
+                // if (x.first < node->data.first)
+                //     node->left = insert(node->left, x);
+                // else if (node->data.first < x.first)
+                //     node->right = insert(node->right, x);
                 else 
                     return (node);
                 node->height = 1 + max(height(node->left), height(node->right));
@@ -248,7 +258,7 @@ namespace ft
                         return left_rotate(root);
                     else 
                     {
-                         root->right = right_rotate(root->right);
+                        root->right = right_rotate(root->right);
                         return left_rotate(root);
                     }
                 }

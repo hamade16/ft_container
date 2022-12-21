@@ -12,7 +12,7 @@
 int main()
 {
      ft::map<std::string, std::string, std::greater<std::string> > ft_m1;
-     ft_m1["a"] ="gamma";
-     ft_m1["b"] ="camma";
+    ft_m1["a"] = "hddds" ;
+   ft_m1["b"] = "d";
     return 0;
 }

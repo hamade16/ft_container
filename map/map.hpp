@@ -69,17 +69,6 @@ namespace ft
                 this->insert(x.begin(), x.end());
                 return (*this);
             }
-            // ---------- test dyal abdellah
-            void test()
-            {
-                for (int i = 0; i < 1e6; i++)
-                    _tree.insert(ft::make_pair(i, 1 + i));
-                std::cout << size() << std::endl;
-                for (int i = 0; i < 1e6; i++)
-                    _tree.delete_node(i);
-                std::cout << size() << std::endl;
-                std::cout << _tree._root->data.first << std::endl;
-            }
 
             /*-----------------------------iterators-------------------------------------------------------------------------------*/
             iterator    begin()
@@ -189,10 +178,11 @@ namespace ft
 
             void swap (map& x)
             {
-                std::swap(this->_alloc, x._alloc);
-                std::swap(this->_compare, x._compare);
-                std::swap(this->_tree, x._tree);
+                // std::swap(this->_alloc, x._alloc);
+                // std::swap(this->_compare, x._compare);
+                // std::swap(this->_tree, x._tree);
                 //_tree.swap(x._tree);
+                _tree.swap(x._tree);
             }
 
             size_type erase (const key_type& k)
@@ -238,7 +228,9 @@ namespace ft
                         tmp = tmp->left;
                     }
                     else if (_compare(tmp->data.first, k))
+                    {
                         tmp = tmp->right;
+                    }
                     else
                     {
                         return (iterator(tmp, _tree._root, &_tree));
@@ -256,7 +248,7 @@ namespace ft
 					else if (_compare(tmp->data.first, k))
 						tmp = tmp->right;
 					else
-						return (const_iterator(tmp, _tree._root));
+						return (const_iterator(tmp, _tree._root, &_tree));
 				}
 				return end();
 			};
