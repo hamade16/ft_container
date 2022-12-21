@@ -301,10 +301,18 @@ namespace ft
                 return (_compare);
             }
 
-            // value_compare value_comp() const
-            // {
-            //     return (value_comp(_compare));
-            // }
+            class value_compare : std::binary_function<value_type, value_type, bool>
+	        {
+		        friend class map;
+	            protected:
+		            Compare	comp;
+
+		            value_compare(Compare c) : comp(c) { }
+	            public:
+		            bool	operator()(value_type const & x, value_type const & y) const {
+			        return (comp(x.first, y.first));
+		        }
+	        };
 /*-------------------------------Allocator:----------------------------------------------------------------------*/
             allocator_type get_allocator() const
             {
