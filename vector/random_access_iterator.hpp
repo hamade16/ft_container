@@ -1,6 +1,8 @@
 #ifndef RANDOM_ACCESS_ITERATOR_HPP
 # define RANDOM_ACCESS_ITERATOR_HPP
 
+#include "../utils/iterator_traits.hpp"
+
 #include <iostream>
 namespace ft{
     template<class Iter>
@@ -11,7 +13,7 @@ namespace ft{
             typedef Iter*                pointer;
             typedef Iter&                reference;
             typedef std::ptrdiff_t       difference_type;
-            typedef typename std::iterator_traits<iterator_type>::iterator_category iterator_category;
+            //typedef typename std::iterator_traits<iterator_type>::iterator_category iterator_category;
 
             private:
                 pointer it;
