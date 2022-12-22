@@ -45,7 +45,7 @@ namespace ft
             }
             ~avl()
             {
-
+            
             }
 
             node_type *new_node(value_type x)
@@ -243,10 +243,10 @@ namespace ft
                         _size--;
                         return temp;
                     }
-                    node_type* temp = max_node(root->left);
+                    node_type* temp = min_node(root->right);
                     _all.destroy(&root->data);
                     _all.construct(&root->data, temp->data);
-                    root->left = delete_node(root->left, temp->data.first);
+                    root->left = delete_node(root->right, temp->data.first);
                 }
                 if (root == NULL)
                     return root;

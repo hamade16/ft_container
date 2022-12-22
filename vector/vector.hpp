@@ -201,8 +201,11 @@ namespace ft
                     pointer v;
                     v = all.allocate(n);
                     _capacite = n;
-                    for(int i = 0; i < _size; i++)
+                    for(size_t i = 0; i < _size; i++)
                         all.construct(v + i, *(_vector+i));
+                    for (size_type i = 0; i < _size; i++)
+                        all.destroy(&_vector[i]);
+                    all.deallocate(_vector, _capacite);
                     this->_vector = v;
                 }
             }

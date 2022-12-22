@@ -70,6 +70,11 @@ namespace ft
                 return (*this);
             }
 
+            ~map()
+            {
+                _tree.clear();
+            }
+
             /*-----------------------------iterators-------------------------------------------------------------------------------*/
             iterator    begin()
             {
@@ -141,7 +146,6 @@ namespace ft
             if (it != end())
                 return it->second;
             insert(ft::make_pair(k, mapped_type()));
-            //std::cout << "hoon" << std::endl;
             return (find(k)->second);
         }
 /*-----------------------------modifiers-----------------------------------------------------------------------------------------------*/
@@ -313,6 +317,11 @@ namespace ft
 			        return (comp(x.first, y.first));
 		        }
 	        };
+
+            value_compare value_comp() const
+            {
+                return (value_compare(this->key_comp()));
+            }
 /*-------------------------------Allocator:----------------------------------------------------------------------*/
             allocator_type get_allocator() const
             {
@@ -344,6 +353,12 @@ namespace ft
 	bool operator== (map<key, value, Compare, Alloc> const & lhs, map<key, value, Compare, Alloc> const & rhs) {
 		return ( std::equal(lhs.begin(), lhs.end(), rhs.begin()) && (lhs.size() == rhs.size()));
 	};
+    template< class Key, class T, class Compare, class Alloc >
+    void swap( std::map<Key,T,Compare,Alloc>& lhs,
+           std::map<Key,T,Compare,Alloc>& rhs )
+           {
+                lhs.swap(rhs);
+           }
 };
 #endif
 

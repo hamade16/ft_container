@@ -1,10 +1,10 @@
-NAME = map
+NAME = vector
 
 MAIN = ./main.cpp
 
 SRC = $(MAIN)
 
-INC = ./map.hpp ../utils/pair.hpp ../utils/reverse_iterator.hpp ./avl.hpp ./bidirectional_iterators.hpp
+INC = ./vector.hpp ../utils/reverse_iterator.hpp  ./random_access_iterator.hpp ./enable_if.hpp is_integral.hpp
 
 DBUG = -fsanitize=address -g
 

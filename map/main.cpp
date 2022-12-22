@@ -32,8 +32,7 @@ int main()
             int ret2 = ft_m3.erase(n);
 
             if (ret1 != ret2)
-            {
-               //cond = false;
+            { 
                 break;
             }
         }
@@ -48,8 +47,5 @@ int main()
             ft_m3.erase(ft_m3.begin(), ft_m3.end());
             ft_m3.erase(ft_m3.begin(), ft_m3.end());
         }
-        //cond = cond && (m3.size() == ft_m3.size() && compareMaps(m3.begin(), m3.end(), ft_m3.begin(), ft_m3.end()));
-
-       // EQUAL(con
     return 0;
 }
